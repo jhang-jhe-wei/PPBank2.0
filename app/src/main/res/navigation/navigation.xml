@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/accountFragment">
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.homi.ppbank20.AccountFragment"
+        android:label="fragment_account"
+        tools:layout="@layout/fragment_account" >
+        <action
+            android:id="@+id/action_accountFragment_to_applyFragment"
+            app:destination="@id/applyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/applyFragment"
+        android:name="com.homi.ppbank20.ApplyFragment"
+        android:label="fragment_apply"
+        tools:layout="@layout/fragment_apply" >
+        <action
+            android:id="@+id/action_applyFragment_to_moreFragment"
+            app:destination="@id/moreFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskFragment"
+        android:name="com.homi.ppbank20.taskFragment"
+        android:label="fragment_task"
+        tools:layout="@layout/fragment_task" >
+        <action
+            android:id="@+id/action_taskFragment_to_accountFragment"
+            app:destination="@id/accountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/moreFragment"
+        android:name="com.homi.ppbank20.moreFragment"
+        android:label="fragment_more"
+        tools:layout="@layout/fragment_more" >
+        <action
+            android:id="@+id/action_moreFragment_to_taskFragment"
+            app:destination="@id/taskFragment" />
+    </fragment>
+</navigation>
