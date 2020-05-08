@@ -1,0 +1,8 @@
+<resources>
+    <array name="income_array">
+        <item>prize</item>
+        <item>apply</item>
+        <item>task</item>
+        <item>pocket money</item>
+    </array>
+</resources>
