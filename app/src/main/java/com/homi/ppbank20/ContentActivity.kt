@@ -20,19 +20,22 @@ class ContentActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        val navController=findNavController(R.id.navfragment)
         bottomNavigationView.setOnNavigationItemSelectedListener { item: MenuItem ->
             when (item.itemId) {
                 R.id.menu_account -> {
+                    findNavController(R.id.navfragment).navigate(R.id.accountFragment)
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.menu_apply -> {
+                    findNavController(R.id.navfragment).navigate(R.id.applyFragment)
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.menu_task -> {
+                    findNavController(R.id.navfragment).navigate(R.id.taskFragment)
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.menu_more -> {
+                    findNavController(R.id.navfragment).navigate(R.id.moreFragment)
                     return@setOnNavigationItemSelectedListener true
                 }
             }
