@@ -24,4 +24,9 @@
         android:name="com.homi.ppbank20.moreFragment"
         android:label="fragment_more"
         tools:layout="@layout/fragment_more" />
+    <fragment
+        android:id="@+id/m_accoutFragment"
+        android:name="com.homi.ppbank20.M_accoutFragment"
+        android:label="fragment_m_accout"
+        tools:layout="@layout/fragment_m_accout" />
 </navigation>
