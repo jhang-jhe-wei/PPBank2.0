@@ -1,14 +1,293 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white_color"
     tools:context=".M_accoutFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/M_guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.2" />
 
-</FrameLayout>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/M_guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/M_guideline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/prime_color"
+        app:layout_constraintBottom_toTopOf="@+id/M_guideline4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <RadioGroup
+            android:id="@+id/M_toggle"
+            android:layout_width="300dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/pink_out_line"
+            android:checkedButton="@+id/offer"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/M_account_viewpager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioButton
+                android:id="@+id/btn_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="1dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="1dp"
+                android:layout_weight="1"
+                android:background="@drawable/radio_left_button_selector"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:text="@string/income"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/radio_text_color_selector" />
+
+            <RadioButton
+                android:id="@+id/btn_child"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="1dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginBottom="1dp"
+                android:layout_weight="1"
+                android:background="@drawable/radio_right_button_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:text="@string/expense"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/radio_text_color_selector" />
+        </RadioGroup>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/M_account_viewpager"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/M_toggle" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <lecho.lib.hellocharts.view.PieChartView
+        android:id="@+id/M_pie_chart"
+        android:layout_width="193dp"
+        android:layout_height="0dp"
+        android:paddingTop="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/M_guideline5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/M_guideline4"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/M_tbx_pie_color01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="32dp"
+        android:text="●"
+        android:textColor="@color/colorPieChartDark"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/M_tbx_pie_color02"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toEndOf="@+id/M_pie_chart"
+        app:layout_constraintTop_toTopOf="@+id/M_guideline4" />
+
+    <TextView
+        android:id="@+id/M_tbx_pie_color02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="16dp"
+        android:text="●"
+        android:textColor="@color/colorPieChartLight"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/M_tbx_pie_color03"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toEndOf="@+id/M_pie_chart"
+        app:layout_constraintTop_toBottomOf="@+id/M_tbx_pie_color01" />
+
+    <TextView
+        android:id="@+id/M_tbx_pie_color04"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="24dp"
+        android:text="●"
+        android:textColor="@color/colorPieChartDarker"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/M_guideline5"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toEndOf="@+id/M_pie_chart"
+        app:layout_constraintTop_toBottomOf="@+id/M_tbx_pie_color03"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/M_tbx_pie_color03"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="16dp"
+        android:text="●"
+        android:textColor="@color/colorPieChartLighter"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/M_tbx_pie_color04"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toEndOf="@+id/M_pie_chart"
+        app:layout_constraintTop_toBottomOf="@+id/M_tbx_pie_color02" />
+
+    <TextView
+        android:id="@+id/M_tbx_pie_detail01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.269"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/M_tbx_pie_color01"
+        app:layout_constraintTop_toTopOf="@+id/M_tbx_pie_color01" />
+
+    <TextView
+        android:id="@+id/M_tbx_pie_detail03"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.269"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/M_tbx_pie_color03"
+        app:layout_constraintTop_toTopOf="@+id/M_tbx_pie_color03" />
+
+    <TextView
+        android:id="@+id/M_tbx_pie_detail04"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.378"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/M_tbx_pie_color04"
+        app:layout_constraintTop_toTopOf="@+id/M_tbx_pie_color04" />
+
+    <TextView
+        android:id="@+id/M_tbx_pie_detail02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.269"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/M_tbx_pie_color02"
+        app:layout_constraintTop_toTopOf="@+id/M_tbx_pie_color02" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="20dp"
+        android:text="Recent records"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@android:color/darker_gray"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/M_guideline5" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+        android:gravity="center"
+        android:text="more"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/prime_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.859"
+        app:layout_constraintStart_toEndOf="@+id/textView8"
+        app:layout_constraintTop_toTopOf="@+id/textView8" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/M_account_RecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/M_guideline6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+    <Button
+        android:id="@+id/M_btn_account_left"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:background="@drawable/red_frame"
+        android:text="Account\nmanagement"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/M_btn_account_right"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/M_guideline6" />
+
+    <Button
+        android:id="@+id/M_btn_account_right"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:background="@drawable/red_frame"
+        android:text="Mobile\npayment"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toEndOf="@+id/M_btn_account_left"
+        app:layout_constraintTop_toTopOf="@+id/M_guideline6" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

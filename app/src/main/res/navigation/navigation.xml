@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/accountFragment">
+    app:startDestination="@id/m_accoutFragment">
     <fragment
         android:id="@+id/accountFragment"
         android:name="com.homi.ppbank20.AccountFragment"
@@ -29,4 +29,9 @@
         android:name="com.homi.ppbank20.M_accoutFragment"
         android:label="fragment_m_accout"
         tools:layout="@layout/fragment_m_accout" />
+    <fragment
+        android:id="@+id/taskdetailFragment"
+        android:name="com.homi.ppbank20.taskdetailFragment"
+        android:label="fragment_taskdetail"
+        tools:layout="@layout/fragment_taskdetail" />
 </navigation>
