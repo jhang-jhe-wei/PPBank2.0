@@ -12,14 +12,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.2" />
+        app:layout_constraintGuide_percent="0.26" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/M_guideline5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.55" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/M_guideline6"
@@ -67,7 +67,7 @@
                 android:button="@null"
                 android:checked="true"
                 android:gravity="center"
-                android:text="@string/income"
+                android:text="parent"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@color/radio_text_color_selector" />
 
@@ -82,15 +82,17 @@
                 android:background="@drawable/radio_right_button_selector"
                 android:button="@null"
                 android:gravity="center"
-                android:text="@string/expense"
+                android:text="child"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@color/radio_text_color_selector" />
         </RadioGroup>
 
-        <androidx.viewpager.widget.ViewPager
+        <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/M_account_viewpager"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -101,9 +103,10 @@
 
     <lecho.lib.hellocharts.view.PieChartView
         android:id="@+id/M_pie_chart"
-        android:layout_width="193dp"
+        android:layout_width="245dp"
         android:layout_height="0dp"
-        android:paddingTop="20dp"
+        android:paddingTop="10dp"
+        android:paddingRight="50dp"
         app:layout_constraintBottom_toTopOf="@+id/M_guideline5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -115,9 +118,7 @@
         android:id="@+id/M_tbx_pie_color01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="48dp"
         android:text="●"
         android:textColor="@color/colorPieChartDark"
         android:textSize="16sp"
@@ -130,9 +131,7 @@
         android:id="@+id/M_tbx_pie_color02"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="●"
         android:textColor="@color/colorPieChartLight"
         android:textSize="16sp"
@@ -145,9 +144,7 @@
         android:id="@+id/M_tbx_pie_color04"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="24dp"
         android:text="●"
         android:textColor="@color/colorPieChartDarker"
@@ -163,9 +160,7 @@
         android:id="@+id/M_tbx_pie_color03"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="●"
         android:textColor="@color/colorPieChartLighter"
         android:textSize="16sp"
@@ -180,9 +175,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:text="TextView"
+        android:gravity="left"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/bottom_menu_unpress_color"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.269"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toEndOf="@+id/M_tbx_pie_color01"
         app:layout_constraintTop_toTopOf="@+id/M_tbx_pie_color01" />
@@ -193,9 +190,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:text="TextView"
+        android:gravity="left"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/bottom_menu_unpress_color"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.269"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toEndOf="@+id/M_tbx_pie_color03"
         app:layout_constraintTop_toTopOf="@+id/M_tbx_pie_color03" />
@@ -204,9 +203,13 @@
         android:id="@+id/M_tbx_pie_detail04"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:gravity="left"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/bottom_menu_unpress_color"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.378"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toEndOf="@+id/M_tbx_pie_color04"
         app:layout_constraintTop_toTopOf="@+id/M_tbx_pie_color04" />
@@ -217,9 +220,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:text="TextView"
+        android:gravity="left"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/bottom_menu_unpress_color"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.269"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toEndOf="@+id/M_tbx_pie_color02"
         app:layout_constraintTop_toTopOf="@+id/M_tbx_pie_color02" />
@@ -228,11 +233,11 @@
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="8dp"
         android:text="Recent records"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@android:color/darker_gray"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/M_guideline5" />
@@ -254,11 +259,15 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/M_account_RecyclerView"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@color/white_color"
         app:layout_constraintBottom_toTopOf="@+id/M_guideline6"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/M_btn_account_left"

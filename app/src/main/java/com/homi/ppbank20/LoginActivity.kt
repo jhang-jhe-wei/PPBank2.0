@@ -12,12 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_register.*
+
 
 
 private val TAG = LoginActivity::class.java.simpleName
@@ -40,36 +36,9 @@ class LoginActivity : AppCompatActivity() {
                 login_ed_password.text.toString()
             ).addOnCompleteListener(this, OnCompleteListener<AuthResult> { task ->
                 if (task.isSuccessful) {
-                    Log.d(TAG,"Login success")
-                    val ref = FirebaseDatabase.getInstance().reference
-                    ref.child("users").addValueEventListener(object : ValueEventListener {
-                        override fun onCancelled(p0: DatabaseError) {
-
-                        }
-
-                        override fun onDataChange(p0: DataSnapshot) {
-                            FirebaseDatabase.getInstance().reference.child("users")
-                                .addListenerForSingleValueEvent(object : ValueEventListener {
-                                    override fun onCancelled(p0: DatabaseError) {
-                                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                                    }
-
-                                    override fun onDataChange(p0: DataSnapshot) {
-                                        Log.d(TAG,"firebase reading")
-                                        var user=p0.child(auth.uid.toString()).getValue(User::class.java)
-                                        Log.d(TAG,user.toString())
-                                        val intent=Intent()
-                                        val bundle=Bundle()
-                                        bundle.putSerializable("user",user)
-                                        intent.putExtras(bundle)
-                                        setResult(Activity.RESULT_OK, intent)
-                                        finish()
-                                    }
-                                })
-                        }
-
-                    })
-
+                    Log.d(TAG, "Login success")
+                    setResult(Activity.RESULT_OK)
+                    finish()
                 } else {
                     AlertDialog.Builder(this).setTitle("message")
                         .setMessage("${task.exception?.message}").show()
@@ -77,11 +46,4 @@ class LoginActivity : AppCompatActivity() {
             })
         }
     }
-
-
-    override fun onStart() {
-        super.onStart()
-    }
-
-
 }
