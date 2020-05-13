@@ -1,5 +1,6 @@
 package com.homi.ppbank20
 
+import Record
 import User
 import android.graphics.Color
 import android.os.Bundle
@@ -7,17 +8,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_m_accout.*
 import lecho.lib.hellocharts.model.PieChartData
 import lecho.lib.hellocharts.model.SliceValue
+import java.text.SimpleDateFormat
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private var user: User = User()
 private val TAG = M_accountFragment::class.java.simpleName
 
 /**
@@ -27,8 +28,6 @@ private val TAG = M_accountFragment::class.java.simpleName
  */
 class M_accountFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
     private var user: User? = User()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,13 +45,20 @@ class M_accountFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         user = arguments?.getSerializable("user") as? User
         Log.d(TAG, user.toString())
-        if(user!=null)
-            parentState()
         M_account_viewpager.adapter = viewPagerAdapter()
-        btn_parent.setOnClickListener { parentState() }
-        btn_child.setOnClickListener { childState() }
+        M_btn_account_right.setOnClickListener { findNavController().navigate(R.id.transfetmoneyragment,arguments) }
+        if(user!=null){
+            parentState()
+            btn_parent.setOnClickListener { parentState() }
+            btn_child.setOnClickListener { childState() }
+        }
+
     }
     fun parentState(){
+        val bundle=Bundle()
+        bundle.putSerializable("user", user)
+        bundle.putString("type","income")
+        btn_m_more.setOnClickListener { findNavController().navigate(R.id.recordFragment,bundle) }
         //設定圓餅圖右方敘述
         M_tbx_pie_detail01.setText("prize")
         M_tbx_pie_detail02.setText("apply")
@@ -63,32 +69,32 @@ class M_accountFragment : Fragment() {
 
         pieData.add(
             SliceValue(
-                user?.incomes?.get("type01").toString().toFloat(),
+                user?.incomes?.get("prize").toString().toFloat(),
                 resources.getColor(R.color.colorPieChartDark)
             )
         )
         pieData.add(
             SliceValue(
-                user?.incomes?.get("type02").toString().toFloat(),
+                user?.incomes?.get("apply").toString().toFloat(),
                 resources.getColor(R.color.colorPieChartLight)
             )
         )
         pieData.add(
             SliceValue(
-                user?.incomes?.get("type03").toString().toFloat(),
+                user?.incomes?.get("task").toString().toFloat(),
                 resources.getColor(R.color.colorPieChartLighter)
             )
         )
         pieData.add(
             SliceValue(
-                user?.incomes?.get("type04").toString().toFloat(),
+                user?.incomes?.get("pocketmoney").toString().toFloat(),
                 resources.getColor(R.color.colorPieChartDarker)
             )
         )
         var sum =
-            user?.incomes?.get("type01").toString().toFloat() + user?.incomes?.get("type02").toString().toFloat() + user?.incomes?.get(
-                "type03"
-            ).toString().toFloat() + user?.incomes?.get("type04").toString().toFloat()
+            user?.incomes?.get("prize").toString().toFloat() + user?.incomes?.get("apply").toString().toFloat() + user?.incomes?.get(
+                "task"
+            ).toString().toFloat() + user?.incomes?.get("pocketmoney").toString().toFloat()
 
 
         //設定圓餅圖 之後要改用data塞
@@ -102,9 +108,17 @@ class M_accountFragment : Fragment() {
             .centerText2Color =
             Color.parseColor("#FF3C4D")
         M_pie_chart.setPieChartData(pieChartData)
+
+        val recordAdapter=RecordAdapter()
+        recordAdapter.setList(user?.incomeRecords)
+        M_account_RecyclerView.adapter=RecordAdapter()
     }
 
     fun childState(){
+        val bundle=Bundle()
+        bundle.putSerializable("user", user)
+        bundle.putString("type","income")
+        btn_m_more.setOnClickListener { findNavController().navigate(R.id.recordFragment,bundle) }
         //設定圓餅圖右方敘述
         M_tbx_pie_detail01.setText("food")
         M_tbx_pie_detail02.setText("daily supplies")
@@ -115,32 +129,32 @@ class M_accountFragment : Fragment() {
 
         pieData.add(
             SliceValue(
-                user?.expenses?.get("type01").toString().toFloat(),
-                R.color.colorPieChartDark
+                user?.expenses?.get("food").toString().toFloat(),
+                resources.getColor(R.color.colorPieChartDark)
             )
         )
         pieData.add(
             SliceValue(
-                user?.expenses?.get("type02").toString().toFloat(),
-                R.color.colorPieChartLight
+                user?.expenses?.get("dailysupplies").toString().toFloat(),
+                resources.getColor(R.color.colorPieChartLight)
             )
         )
         pieData.add(
             SliceValue(
-                user?.expenses?.get("type03").toString().toFloat(),
-                R.color.colorPieChartLighter
+                user?.expenses?.get("entertainment").toString().toFloat(),
+                resources.getColor(R.color.colorPieChartLighter)
             )
         )
         pieData.add(
             SliceValue(
-                user?.expenses?.get("type04").toString().toFloat(),
-                R.color.colorPieChartDarker
+                user?.expenses?.get("other").toString().toFloat(),
+                resources.getColor(R.color.colorPieChartDarker)
             )
         )
         var sum =
-            user?.expenses?.get("type01").toString().toFloat() + user?.expenses?.get("type02").toString().toFloat() + user?.expenses?.get(
-                "type03"
-            ).toString().toFloat() + user?.expenses?.get("type04").toString().toFloat()
+            user?.expenses?.get("food").toString().toFloat() + user?.expenses?.get("dailysupplies").toString().toFloat() + user?.expenses?.get(
+                "entertainment"
+            ).toString().toFloat() + user?.expenses?.get("other").toString().toFloat()
 
 
         //設定圓餅圖 之後要改用data塞
@@ -154,6 +168,49 @@ class M_accountFragment : Fragment() {
             .centerText2Color =
             Color.parseColor("#FF3C4D")
         M_pie_chart.setPieChartData(pieChartData)
+
+        val recordAdapter=RecordAdapter()
+        recordAdapter.setList(user?.expenseRecords)
+        M_account_RecyclerView.adapter=RecordAdapter()
+    }
+
+    class RecordAdapter : RecyclerView.Adapter<RecordAdapter.PagerViewHolder>() {
+        var data= mutableListOf<Record>()
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerViewHolder {
+
+            val itemView = LayoutInflater.from(parent.context)
+                .inflate(R.layout.record_layout, parent, false)
+            return PagerViewHolder(itemView)
+        }
+
+        override fun onBindViewHolder(holder: PagerViewHolder, position: Int) {
+            holder.bindData(position)
+        }
+
+        fun setList(list: MutableList<Record>?){
+            if (list != null) {
+                data=list
+            }
+        }
+
+        override fun getItemCount(): Int {
+            return data.size
+        }
+
+        //	ViewHolder需要繼承RecycleView.ViewHolder
+        inner class PagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+            val txv_record_date:TextView=itemView.findViewById(R.id.txv_record_date)
+            val txv_record_name:TextView=itemView.findViewById(R.id.txv_record_name)
+            val txv_record_money:TextView=itemView.findViewById(R.id.txv_record_money)
+
+            fun bindData(i: Int) {
+                val simpleDateFormat=SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+                val date=simpleDateFormat.parse(data.get(i).date)
+                txv_record_date.text="${date.month}/${date.day}"
+                txv_record_name.text="${data.get(i).uid} ${data.get(i).name}"
+                txv_record_money.text="$${data.get(i).money}"
+            }
+        }
     }
 
     class viewPagerAdapter : RecyclerView.Adapter<viewPagerAdapter.PagerViewHolder>() {
@@ -206,22 +263,5 @@ class M_accountFragment : Fragment() {
         }
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment M_accoutFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            M_accountFragment().apply {
-                arguments = Bundle().apply {
-                    putSerializable("user", user)
-                }
-            }
-    }
+
 }

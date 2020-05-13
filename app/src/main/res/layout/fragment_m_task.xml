@@ -5,14 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white_color"
-    tools:context=".moreFragment">
+    tools:context=".m_taskFragment">
 
-    <Button
-        android:id="@+id/btn_signout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/white_frame_prime_backgroup"
-        android:text="signout"
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/M_task_recycleview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

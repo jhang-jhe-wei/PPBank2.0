@@ -1,6 +1,7 @@
 package com.homi.ppbank20
 
 import LoadingDialog
+import Record
 import User
 import android.app.Activity
 import android.app.AlertDialog
@@ -23,15 +24,12 @@ import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_content.*
 import kotlinx.android.synthetic.main.fragment_m_accout.*
 
 
-private val TAG = LoginActivity::class.java.simpleName
+private val TAG = ContentActivity::class.java.simpleName
 
 class ContentActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
     private val PARENT_TYPE: String = "1"
@@ -43,7 +41,7 @@ class ContentActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_content)
         loadingDialog = LoadingDialog(this)
-        loadingDialog?.show()
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -62,6 +60,7 @@ class ContentActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
     override fun onStart() {
         super.onStart()
         FirebaseAuth.getInstance().addAuthStateListener(this)
+        loadingDialog?.show()
     }
 
 
@@ -85,13 +84,78 @@ class ContentActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
 
                 override fun onDataChange(p0: DataSnapshot) {
                     user = p0.child(auth.uid.toString()).getValue(User::class.java)
-                    val bundle=Bundle()
-                    bundle.putSerializable("user",user)
-                    intent.putExtra("user",bundle)
+                    val bundle = Bundle()
+                    bundle.putSerializable("user", user)
+                    intent.putExtra("user", bundle)
                     updataUI()
                     loadingDialog?.hide()
                 }
             })
+            ref.child("incomerecords").child(auth.uid.toString())
+                .addValueEventListener(object : ValueEventListener {
+
+                    override fun onCancelled(p0: DatabaseError) {
+
+                    }
+
+                    override fun onDataChange(p0: DataSnapshot) {
+                        user?.incomeRecords?.clear()
+                        user?.applys?.clear()
+                        p0.children.forEach { it ->
+                            val record = it.getValue(Record::class.java)
+                            record?.let { it1 -> user?.incomeRecords?.add(it1) }
+                        }
+                    }
+                })
+            ref.child("expenserecords").child(auth.uid.toString())
+                .addValueEventListener(object : ValueEventListener {
+
+                    override fun onCancelled(p0: DatabaseError) {
+
+                    }
+
+                    override fun onDataChange(p0: DataSnapshot) {
+                        user?.expenseRecords?.clear()
+                        user?.applys?.clear()
+                        p0.children.forEach { it ->
+                            val record = it.getValue(Record::class.java)
+                            record?.let { it1 -> user?.expenseRecords?.add(it1) }
+                        }
+                    }
+                })
+
+            ref.child("applys").child(auth.uid.toString())
+                .addValueEventListener(object : ValueEventListener {
+
+                    override fun onCancelled(p0: DatabaseError) {
+
+                    }
+
+                    override fun onDataChange(p0: DataSnapshot) {
+                        user?.applys?.clear()
+                        p0.children.forEach { it ->
+                            val record = it.getValue(Record::class.java)
+                            record?.let { it1 -> user?.applys?.add(it1) }
+                        }
+                    }
+                })
+
+            ref.child("tasks").child(auth.uid.toString())
+                .addValueEventListener(object : ValueEventListener {
+
+                    override fun onCancelled(p0: DatabaseError) {
+
+                    }
+
+                    override fun onDataChange(p0: DataSnapshot) {
+                        user?.tasks?.clear()
+                        p0.children.forEach { it ->
+                            val record = it.getValue(Record::class.java)
+                            record?.let { it1 -> user?.tasks?.add(it1) }
+                        }
+                    }
+                })
+
         } else {
             startActivityForResult(Intent(this, LoginActivity::class.java), REQUESTCODE)
         }
@@ -99,7 +163,10 @@ class ContentActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
 
     fun updataUI() {
         if (user?.type.equals(PARENT_TYPE)) {
-            findNavController(R.id.navfragment).navigate(R.id.m_accountFragment,intent.getBundleExtra("user"))
+            findNavController(R.id.navfragment).navigate(
+                R.id.m_accountFragment,
+                intent.getBundleExtra("user")
+            )
             bottomNavigationView.setOnNavigationItemSelectedListener { item: MenuItem ->
                 when (item.itemId) {
                     R.id.menu_account -> {
@@ -112,14 +179,14 @@ class ContentActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
                     }
                     R.id.menu_apply -> {
                         findNavController(R.id.navfragment).navigate(
-                            R.id.applyFragment,
+                            R.id.m_applyFragment,
                             intent.getBundleExtra("user")
                         )
                         return@setOnNavigationItemSelectedListener true
                     }
                     R.id.menu_task -> {
                         findNavController(R.id.navfragment).navigate(
-                            R.id.taskFragment,
+                            R.id.m_taskFragment,
                             intent.getBundleExtra("user")
                         )
                         return@setOnNavigationItemSelectedListener true
@@ -135,7 +202,10 @@ class ContentActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
                 false
             }
         } else {
-            findNavController(R.id.navfragment).navigate(R.id.accountFragment,intent.getBundleExtra("user"))
+            findNavController(R.id.navfragment).navigate(
+                R.id.accountFragment,
+                intent.getBundleExtra("user")
+            )
             bottomNavigationView.setOnNavigationItemSelectedListener { item: MenuItem ->
                 when (item.itemId) {
                     R.id.menu_account -> {

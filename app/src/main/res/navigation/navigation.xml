@@ -34,4 +34,29 @@
         android:name="com.homi.ppbank20.taskdetailFragment"
         android:label="fragment_taskdetail"
         tools:layout="@layout/fragment_taskdetail" />
+    <fragment
+        android:id="@+id/recordFragment"
+        android:name="com.homi.ppbank20.recordFragment"
+        android:label="fragment_record"
+        tools:layout="@layout/fragment_record" />
+    <fragment
+        android:id="@+id/transfetmoneyragment"
+        android:name="com.homi.ppbank20.Transfetmoneyragment"
+        android:label="fragment_transfetmoneyragment"
+        tools:layout="@layout/fragment_transfetmoneyragment" />
+    <fragment
+        android:id="@+id/m_applyFragment"
+        android:name="com.homi.ppbank20.m_applyFragment"
+        android:label="fragment_m_apply"
+        tools:layout="@layout/fragment_m_apply" />
+    <fragment
+        android:id="@+id/m_taskFragment"
+        android:name="com.homi.ppbank20.m_taskFragment"
+        android:label="fragment_m_task"
+        tools:layout="@layout/fragment_m_task" />
+    <fragment
+        android:id="@+id/mobliepayFragment"
+        android:name="com.homi.ppbank20.mobliepayFragment"
+        android:label="fragment_mobliepay"
+        tools:layout="@layout/fragment_mobliepay" />
 </navigation>

@@ -125,7 +125,6 @@
             style="@style/Widget.AppCompat.DropDownItem.Spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
             android:background="@drawable/white_solid_balck_stroke"
             android:entries="@array/expense_array"
 
@@ -150,13 +149,13 @@
             android:textColor="@android:color/darker_gray" />
 
         <EditText
-            android:id="@+id/apply_prize"
+            android:id="@+id/apply_money"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/white_solid_balck_stroke"
             android:ems="10"
-            android:paddingLeft="5dp"
             android:inputType="numberDecimal"
+            android:paddingLeft="10dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/design_default_color_on_secondary" />
     </LinearLayout>
@@ -179,13 +178,13 @@
             android:textColor="@android:color/darker_gray" />
 
         <EditText
-            android:id="@+id/apply_remakes"
+            android:id="@+id/apply_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/white_solid_balck_stroke"
             android:ems="10"
-            android:paddingLeft="5dp"
             android:inputType="textPersonName"
+            android:paddingLeft="10dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/design_default_color_on_secondary" />
     </LinearLayout>

@@ -10,6 +10,10 @@ data class User(
     var expenses:MutableMap<String,String>,
     var children:MutableMap<String,String>
 ):Serializable{
+    var incomeRecords=mutableListOf<Record>()
+    var expenseRecords=mutableListOf<Record>()
+    var tasks=mutableListOf<Record>()
+    var applys=mutableListOf<Record>()
     constructor(
         uid: String = "",
         name: String = "",
@@ -23,5 +27,13 @@ data class User(
     ) : this("", "", "", "", "", mutableMapOf(), mutableMapOf(), mutableMapOf()) {
 
     }
-
+    init {
+        incomes=mutableMapOf()
+        expenses=mutableMapOf()
+        children=mutableMapOf()
+        incomeRecords=mutableListOf<Record>()
+        expenseRecords=mutableListOf<Record>()
+        tasks=mutableListOf<Record>()
+        applys=mutableListOf<Record>()
+    }
 }

@@ -106,7 +106,7 @@
         android:layout_width="245dp"
         android:layout_height="0dp"
         android:paddingTop="10dp"
-        android:paddingRight="50dp"
+        android:paddingRight="20dp"
         app:layout_constraintBottom_toTopOf="@+id/M_guideline5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -243,7 +243,7 @@
         app:layout_constraintTop_toTopOf="@+id/M_guideline5" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/btn_m_more"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableRight="@drawable/ic_chevron_right_black_24dp"
@@ -291,7 +291,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:background="@drawable/red_frame"
-        android:text="Mobile\npayment"
+        android:text="Transfer money"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
