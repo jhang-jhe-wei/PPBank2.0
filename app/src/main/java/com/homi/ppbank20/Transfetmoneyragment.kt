@@ -3,6 +3,7 @@ package com.homi.ppbank20
 import Record
 import User
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +23,7 @@ import java.util.*
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
-
+private val TAG=Transfetmoneyragment::class.java.simpleName
 /**
  * A simple [Fragment] subclass.
  * Use the [Transfetmoneyragment.newInstance] factory method to
@@ -63,19 +64,19 @@ class Transfetmoneyragment : Fragment() {
                 ArrayAdapter<String>(
                     it,
                     R.layout.spinner_item,
-                    resources.getStringArray(R.array.expense_array).toMutableList()
+                    resources.getStringArray(R.array.income_array).toMutableList()
                 )
             }
             type_spinnerArrayAdapter?.setDropDownViewResource(R.layout.spinner_item)
             type_spinnerArrayAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             type_spinner.adapter = type_spinnerArrayAdapter
-            val key = FirebaseDatabase.getInstance().reference.child("incomerecords")
-                .child(user?.uid.toString()).push()
             btn_Transfer.setOnClickListener {
+                val key = FirebaseDatabase.getInstance().reference.child("incomerecords")
+                    .child(user?.uid.toString()).push().key
                 val record = Record(
                     key.toString(),
                     user?.uid.toString(),
-                    SimpleDateFormat("yyyy-MM-dd HH:mm:SS").format(
+                    SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(
                         Calendar.getInstance(
                             TimeZone.getTimeZone(
                                 "GMT+8"
@@ -97,17 +98,17 @@ class Transfetmoneyragment : Fragment() {
                         }
 
                         override fun onDataChange(p0: DataSnapshot) {
-                            val money = p0.getValue()
+                            val money:String = p0.getValue().toString()
                             ref.child("users").child(user?.uid.toString()).child("incomes")
                                 .child(record.name)
-                                .setValue(money.toString().toInt() + ed_transfer_money.text.toString().toInt())
+                                .setValue((money.toInt() + (ed_transfer_money.text.toString().toInt())).toString())
                         }
                     })
 
                 var childuid: String = ""
                 user?.children?.keys?.forEach { it ->
                     if (user?.children?.getValue(it.toString()).equals(
-                            type_spinner.selectedItem.toString()
+                            account_spinner.selectedItem.toString()
                         )
                     ) childuid = it.toString()
                 }
@@ -120,11 +121,12 @@ class Transfetmoneyragment : Fragment() {
 
                         override fun onDataChange(p0: DataSnapshot) {
                             val money = p0.child("money").getValue()
-                            val buffer=p0.child("incomes").child(type_spinner.selectedItem.toString()).getValue()
+                            val buffer=p0.child("incomes").child(record.name).getValue()
+
                             ref.child("users").child(childuid).child("money")
-                                .setValue(money.toString().toInt() + ed_transfer_money.text.toString().toInt())
+                                .setValue((money.toString().toInt() + ed_transfer_money.text.toString().toInt()).toString())
                             ref.child("users").child(childuid).child("incomes").child(type_spinner.selectedItem.toString())
-                                .setValue(buffer.toString().toInt() + ed_transfer_money.text.toString().toInt())
+                                .setValue((buffer.toString().toInt() + ed_transfer_money.text.toString().toInt()).toString())
                         }
                     })
 

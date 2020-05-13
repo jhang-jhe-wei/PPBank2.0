@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_m_task.*
@@ -43,21 +44,23 @@ class m_taskFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         user = arguments?.getSerializable("user") as? User
         val taskAdapter=TaskAdapter()
+        user?.tasks?.let { taskAdapter.setData(it) }
+        Log.d(TAG,user?.tasks.toString())
         M_task_recycleview.layoutManager=LinearLayoutManager(context)
         M_task_recycleview.adapter=taskAdapter
     }
 
-    class TaskAdapter : RecyclerView.Adapter<TaskAdapter.PagerViewHolder>() {
+    inner class TaskAdapter : RecyclerView.Adapter<TaskAdapter.PagerViewHolder>() {
         var immediateTask= mutableListOf<Record>()
-        var task= mutableListOf<Record>()
-        var user:User=User()
+        var dailytask= mutableListOf<Record>()
+        var tasks= mutableListOf<Record>()
         private val TITLE = 0
         private val CONTENT = 1
         private val SETTING = 2
         private val RADIO=3
         private val IMMEDIATE="0"
+        private val DAILY="1"
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerViewHolder {
-            Log.d(TAG,viewType.toString())
             var itemView: View
             when (viewType) {
                 TITLE -> itemView = LayoutInflater.from(parent.context)
@@ -65,7 +68,7 @@ class m_taskFragment : Fragment() {
                 CONTENT -> itemView = LayoutInflater.from(parent.context)
                     .inflate(R.layout.m_task_layout, parent, false)
                 RADIO-> itemView = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.m_apply_radio_layout ,parent, false)
+                    .inflate(R.layout.m_task_radio_layout ,parent, false)
                 SETTING -> itemView = LayoutInflater.from(parent.context)
                     .inflate(R.layout.task_add_layout, parent, false)
                 else -> itemView = LayoutInflater.from(parent.context)
@@ -86,20 +89,18 @@ class m_taskFragment : Fragment() {
 
         override fun getItemViewType(position: Int): Int {
             if(position==0||position==immediateTask.size+2)return TITLE
-            else if(position==immediateTask.size+1||position==task.size+immediateTask.size+3)return SETTING
+            else if(position==immediateTask.size+1||position==dailytask.size+immediateTask.size+3)return SETTING
             else if(position<=immediateTask.size) return CONTENT
             else return RADIO
         }
 
-        fun setData(data:User) {
-            if (data != null) {
-                user = data
-            }
-            user.tasks.forEach { it->if (it.type.equals(IMMEDIATE)) immediateTask.add(it)else task.add((it))}
+        fun setData(list:MutableList<Record>) {
+            tasks=list
+            tasks.forEach { it->if (it.type.equals(IMMEDIATE)) immediateTask.add(it)else dailytask.add((it))}
         }
 
         override fun getItemCount(): Int {
-            return user.tasks.size + 4
+            return tasks.size + 4
         }
 
         //	ViewHolder需要繼承RecycleView.ViewHolder
@@ -115,9 +116,9 @@ class m_taskFragment : Fragment() {
             fun bindRadio(i: Int) {
                 val content: TextView = itemView.findViewById(R.id.m_radioview_title)
                 val money: TextView = itemView.findViewById(R.id.m_radioview_content)
-                val index = i-4
-                content.text=task.get(index).content
-                money.text=task.get(index).money
+                val index = i-immediateTask.size-4
+                content.text=dailytask.get(index).content
+                money.text=dailytask.get(index).money
             }
 
             fun bindContent(i: Int) {
@@ -131,8 +132,23 @@ class m_taskFragment : Fragment() {
 
             fun bindSetting(i: Int) {
                 val content:TextView=itemView.findViewById(R.id.task_add_content)
-                if(i==immediateTask.size+1)content.text="Add immediate task"
-                else content.text="Add daily task"
+                if(i==immediateTask.size+1) {
+                    content.text = "Add immediate task"
+                    itemView.setOnClickListener {
+                        val bundle=Bundle()
+                        bundle.putString("type",IMMEDIATE)
+                        findNavController().navigate(R.id.addTaskFragment,bundle)
+                    }
+                }
+                else {
+                    content.text = "Add daily task"
+                    itemView.setOnClickListener {
+                        val bundle=Bundle()
+                        bundle.putString("type",DAILY)
+                        findNavController().navigate(R.id.addTaskFragment,bundle)
+                    }
+                }
+
             }
 
         }

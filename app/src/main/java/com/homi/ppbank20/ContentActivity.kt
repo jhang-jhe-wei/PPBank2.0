@@ -41,7 +41,7 @@ class ContentActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_content)
         loadingDialog = LoadingDialog(this)
-
+        loadingDialog?.show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -60,7 +60,6 @@ class ContentActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
     override fun onStart() {
         super.onStart()
         FirebaseAuth.getInstance().addAuthStateListener(this)
-        loadingDialog?.show()
     }
 
 
@@ -78,6 +77,7 @@ class ContentActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
         var auth = p0.currentUser
         val ref = FirebaseDatabase.getInstance().reference
         if (auth != null) {
+
             ref.child("users").addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
                 }
@@ -99,8 +99,10 @@ class ContentActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
                     }
 
                     override fun onDataChange(p0: DataSnapshot) {
-                        user?.incomeRecords?.clear()
-                        user?.applys?.clear()
+                        val bundle = Bundle()
+                        bundle.putSerializable("user", user)
+                        intent.putExtra("user", bundle)
+                        updataUI()
                         p0.children.forEach { it ->
                             val record = it.getValue(Record::class.java)
                             record?.let { it1 -> user?.incomeRecords?.add(it1) }
@@ -115,8 +117,6 @@ class ContentActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
                     }
 
                     override fun onDataChange(p0: DataSnapshot) {
-                        user?.expenseRecords?.clear()
-                        user?.applys?.clear()
                         p0.children.forEach { it ->
                             val record = it.getValue(Record::class.java)
                             record?.let { it1 -> user?.expenseRecords?.add(it1) }
@@ -132,15 +132,20 @@ class ContentActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
                     }
 
                     override fun onDataChange(p0: DataSnapshot) {
-                        user?.applys?.clear()
                         p0.children.forEach { it ->
                             val record = it.getValue(Record::class.java)
                             record?.let { it1 -> user?.applys?.add(it1) }
                         }
                     }
                 })
-
-            ref.child("tasks").child(auth.uid.toString())
+            var uid:String
+            if(user?.parent!=null){
+                uid=user?.parent.toString()
+            }
+            else{
+                uid =user?.uid.toString()
+            }
+            ref.child("tasks").child(uid)
                 .addValueEventListener(object : ValueEventListener {
 
                     override fun onCancelled(p0: DatabaseError) {
@@ -148,7 +153,6 @@ class ContentActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
                     }
 
                     override fun onDataChange(p0: DataSnapshot) {
-                        user?.tasks?.clear()
                         p0.children.forEach { it ->
                             val record = it.getValue(Record::class.java)
                             record?.let { it1 -> user?.tasks?.add(it1) }

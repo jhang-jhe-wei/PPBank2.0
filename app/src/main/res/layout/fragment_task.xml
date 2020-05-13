@@ -8,6 +8,7 @@
     tools:context=".taskFragment">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/task_recycleview"
         android:layout_width="409dp"
         android:layout_height="821dp"
         app:layout_constraintBottom_toBottomOf="parent"

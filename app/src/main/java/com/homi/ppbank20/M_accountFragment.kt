@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_m_accout.*
 import lecho.lib.hellocharts.model.PieChartData
@@ -29,6 +30,7 @@ private val TAG = M_accountFragment::class.java.simpleName
 class M_accountFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var user: User? = User()
+    private val bundle=Bundle()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -44,7 +46,9 @@ class M_accountFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         user = arguments?.getSerializable("user") as? User
+        bundle.putSerializable("user", user)
         Log.d(TAG, user.toString())
+        Log.d(TAG, user?.expenseRecords.toString())
         M_account_viewpager.adapter = viewPagerAdapter()
         M_btn_account_right.setOnClickListener { findNavController().navigate(R.id.transfetmoneyragment,arguments) }
         if(user!=null){
@@ -55,8 +59,6 @@ class M_accountFragment : Fragment() {
 
     }
     fun parentState(){
-        val bundle=Bundle()
-        bundle.putSerializable("user", user)
         bundle.putString("type","income")
         btn_m_more.setOnClickListener { findNavController().navigate(R.id.recordFragment,bundle) }
         //設定圓餅圖右方敘述
@@ -111,13 +113,12 @@ class M_accountFragment : Fragment() {
 
         val recordAdapter=RecordAdapter()
         recordAdapter.setList(user?.incomeRecords)
-        M_account_RecyclerView.adapter=RecordAdapter()
+        M_account_RecyclerView.layoutManager=LinearLayoutManager(context)
+        M_account_RecyclerView.adapter=recordAdapter
     }
 
     fun childState(){
-        val bundle=Bundle()
-        bundle.putSerializable("user", user)
-        bundle.putString("type","income")
+        bundle.putString("type","expense")
         btn_m_more.setOnClickListener { findNavController().navigate(R.id.recordFragment,bundle) }
         //設定圓餅圖右方敘述
         M_tbx_pie_detail01.setText("food")
@@ -171,7 +172,8 @@ class M_accountFragment : Fragment() {
 
         val recordAdapter=RecordAdapter()
         recordAdapter.setList(user?.expenseRecords)
-        M_account_RecyclerView.adapter=RecordAdapter()
+        M_account_RecyclerView.layoutManager=LinearLayoutManager(context)
+        M_account_RecyclerView.adapter=recordAdapter
     }
 
     class RecordAdapter : RecyclerView.Adapter<RecordAdapter.PagerViewHolder>() {
@@ -207,7 +209,7 @@ class M_accountFragment : Fragment() {
                 val simpleDateFormat=SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
                 val date=simpleDateFormat.parse(data.get(i).date)
                 txv_record_date.text="${date.month}/${date.day}"
-                txv_record_name.text="${data.get(i).uid} ${data.get(i).name}"
+                txv_record_name.text="${data.get(i).name}"
                 txv_record_money.text="$${data.get(i).money}"
             }
         }

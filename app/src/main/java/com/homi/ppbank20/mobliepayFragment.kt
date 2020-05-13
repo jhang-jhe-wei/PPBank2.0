@@ -81,9 +81,9 @@ class mobliepayFragment : Fragment() {
             Log.d(TAG, record.toString())
 
             val ref = FirebaseDatabase.getInstance().reference
-            ref.child("expenserecords").child(user?.uid.toString()).child(key.toString())
+            ref.child("expenserecords").child(user?.parent.toString()).child(key.toString())
                 .setValue(record)
-            ref.child("users").child(user?.uid.toString()).child("expenses").child(record.name)
+            ref.child("users").child(user?.parent.toString()).child("expenses").child(record.name)
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onCancelled(p0: DatabaseError) {
                         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -91,15 +91,16 @@ class mobliepayFragment : Fragment() {
 
                     override fun onDataChange(p0: DataSnapshot) {
                         val money = p0.getValue()
-                        ref.child("users").child(user?.uid.toString()).child("expenses")
+                        ref.child("users").child(user?.parent.toString()).child("expenses")
                             .child(record.name)
-                            .setValue(money.toString().toInt() + ed_transfer_money.text.toString().toInt())
+                            .setValue((money.toString().toInt() + ed_mobliepay_money.text.toString().toInt()).toString())
+
                     }
                 })
 
-            ref.child("expenserecords").child(user?.parent.toString()).child(key.toString()).setValue(record)
+            ref.child("expenserecords").child(user?.uid.toString()).child(key.toString()).setValue(record)
 
-            ref.child("users").child(user?.parent.toString()).addListenerForSingleValueEvent(object :
+            ref.child("users").child(user?.uid.toString()).addListenerForSingleValueEvent(object :
                 ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -109,11 +110,11 @@ class mobliepayFragment : Fragment() {
                     val money = p0.child("money").getValue()
                     val buffer =
                         p0.child("expenses").child(expense_spinner.selectedItem.toString()).getValue()
-                    ref.child("users").child(user?.parent.toString()).child("money")
-                        .setValue(money.toString().toInt() - ed_transfer_money.text.toString().toInt())
-                    ref.child("users").child(user?.parent.toString()).child("expenses")
+                    ref.child("users").child(user?.uid.toString()).child("money")
+                        .setValue((money.toString().toInt() - ed_mobliepay_money.text.toString().toInt()).toString())
+                    ref.child("users").child(user?.uid.toString()).child("expenses")
                         .child(expense_spinner.selectedItem.toString())
-                        .setValue(buffer.toString().toInt() - ed_transfer_money.text.toString().toInt())
+                        .setValue((buffer.toString().toInt() + ed_mobliepay_money.text.toString().toInt()).toString())
                 }
             })
         }

@@ -3,20 +3,20 @@ package com.homi.ppbank20
 import Record
 import User
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_m_accout.*
 import kotlinx.android.synthetic.main.fragment_record.*
 import java.text.SimpleDateFormat
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+private val TAG=recordFragment::class.java.simpleName
 
 /**
  * A simple [Fragment] subclass.
@@ -40,17 +40,18 @@ class recordFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val recordAdapter = M_accountFragment.RecordAdapter()
-        val user = arguments?.getBundle("user") as User?
+        val user = arguments?.getSerializable("user") as User?
         val type = arguments?.getString("type")
+        val recordAdapter = RecordsAdapter()
         if (type.equals("income"))
-            recordAdapter.setList(user?.incomeRecords)
+            user?.incomeRecords?.let { recordAdapter.setList(it) }
         else
-            recordAdapter.setList(user?.expenseRecords)
-        record_recycleView.adapter = RecordAdapter()
+            user?.expenseRecords?.let { recordAdapter.setList(it) }
+        record_recycleView.layoutManager= LinearLayoutManager(context)
+        record_recycleView.adapter = recordAdapter
     }
 
-    class RecordAdapter : RecyclerView.Adapter<RecordAdapter.PagerViewHolder>() {
+    class RecordsAdapter : RecyclerView.Adapter<RecordsAdapter.PagerViewHolder>() {
         var data = mutableListOf<Record>()
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerViewHolder {
 
@@ -63,13 +64,13 @@ class recordFragment : Fragment() {
             holder.bindData(position)
         }
 
-        fun setList(list: MutableList<Record>?) {
-            if (list != null) {
-                data = list
-            }
+        fun setList(list: MutableList<Record>) {
+            data = list
+            Log.d(TAG,data.toString())
         }
 
         override fun getItemCount(): Int {
+            Log.d(TAG,data.size.toString())
             return data.size
         }
 
@@ -83,7 +84,7 @@ class recordFragment : Fragment() {
                 val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
                 val date = simpleDateFormat.parse(data.get(i).date)
                 txv_record_date.text = "${date.month}/${date.day}"
-                txv_record_name.text = "${data.get(i).uid} ${data.get(i).name}"
+                txv_record_name.text = "$${data.get(i).name}"
                 txv_record_money.text = "$${data.get(i).money}"
             }
         }

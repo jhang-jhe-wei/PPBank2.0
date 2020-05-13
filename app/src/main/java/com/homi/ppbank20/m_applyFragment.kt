@@ -41,6 +41,7 @@ class m_applyFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         user = arguments?.getSerializable("user") as? User
+        Log.d(TAG,user?.applys.toString())
         val recyclerView=applyAdapter()
         recyclerView.setList(user?.applys)
         m_apply_recycleview.layoutManager=LinearLayoutManager(context)
@@ -55,7 +56,6 @@ class m_applyFragment : Fragment() {
         private val SETTING = 2
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerViewHolder {
-            Log.d(TAG,viewType.toString())
             var itemView: View
             when (viewType) {
                 TITLE -> itemView = LayoutInflater.from(parent.context)
@@ -89,6 +89,7 @@ class m_applyFragment : Fragment() {
             if (list != null) {
                 data = list
             }
+            Log.d(TAG,data.toString())
         }
 
         override fun getItemCount(): Int {
@@ -106,6 +107,7 @@ class m_applyFragment : Fragment() {
             }
 
             fun bindContent(i: Int) {
+                Log.d(TAG,"OnCall")
                 val index = i - 1
                 val content: TextView = itemView.findViewById(R.id.txv_m_apply_content)
                 val money: TextView = itemView.findViewById(R.id.txv_m_apply_money)

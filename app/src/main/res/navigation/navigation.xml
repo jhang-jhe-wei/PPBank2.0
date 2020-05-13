@@ -59,4 +59,9 @@
         android:name="com.homi.ppbank20.mobliepayFragment"
         android:label="fragment_mobliepay"
         tools:layout="@layout/fragment_mobliepay" />
+    <fragment
+        android:id="@+id/addTaskFragment"
+        android:name="com.homi.ppbank20.addTaskFragment"
+        android:label="fragment_add_task"
+        tools:layout="@layout/fragment_add_task" />
 </navigation>
