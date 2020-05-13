@@ -71,6 +71,11 @@ class Transfetmoneyragment : Fragment() {
             type_spinnerArrayAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             type_spinner.adapter = type_spinnerArrayAdapter
             btn_Transfer.setOnClickListener {
+                val money=ed_transfer_money.text.toString()
+                val name=type_spinner.selectedItem.toString()
+                val content=ed_transfer_remark.text.toString()
+                val account=account_spinner.selectedItem.toString()
+                val password=ed_transfer_password.text.toString()
                 val key = FirebaseDatabase.getInstance().reference.child("incomerecords")
                     .child(user?.uid.toString()).push().key
                 val record = Record(
@@ -83,14 +88,15 @@ class Transfetmoneyragment : Fragment() {
                             )
                         ).time
                     ),
-                    type_spinner.selectedItem.toString(),
-                    ed_transfer_remark.text.toString(),
-                    ed_transfer_money.text.toString(),
+                    name,
+                    content,
+                    money,
                     "", ""
                 )
                 val ref = FirebaseDatabase.getInstance().reference
                 ref.child("incomerecords").child(user?.uid.toString()).child(key.toString())
                     .setValue(record)
+
                 ref.child("users").child(user?.uid.toString()).child("incomes").child(record.name)
                     .addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onCancelled(p0: DatabaseError) {
@@ -98,17 +104,16 @@ class Transfetmoneyragment : Fragment() {
                         }
 
                         override fun onDataChange(p0: DataSnapshot) {
-                            val money:String = p0.getValue().toString()
+                            val buffer:String = p0.getValue().toString()
                             ref.child("users").child(user?.uid.toString()).child("incomes")
                                 .child(record.name)
-                                .setValue((money.toInt() + (ed_transfer_money.text.toString().toInt())).toString())
+                                .setValue((money.toInt() + buffer.toInt()).toString())
                         }
                     })
-
                 var childuid: String = ""
                 user?.children?.keys?.forEach { it ->
                     if (user?.children?.getValue(it.toString()).equals(
-                            account_spinner.selectedItem.toString()
+                            account
                         )
                     ) childuid = it.toString()
                 }
@@ -120,13 +125,13 @@ class Transfetmoneyragment : Fragment() {
                         }
 
                         override fun onDataChange(p0: DataSnapshot) {
-                            val money = p0.child("money").getValue()
+                            val buffer1 = p0.child("money").getValue()
                             val buffer=p0.child("incomes").child(record.name).getValue()
 
                             ref.child("users").child(childuid).child("money")
-                                .setValue((money.toString().toInt() + ed_transfer_money.text.toString().toInt()).toString())
-                            ref.child("users").child(childuid).child("incomes").child(type_spinner.selectedItem.toString())
-                                .setValue((buffer.toString().toInt() + ed_transfer_money.text.toString().toInt()).toString())
+                                .setValue((buffer.toString().toInt() + money.toInt()).toString())
+                            ref.child("users").child(childuid).child("incomes").child(name)
+                                .setValue((buffer.toString().toInt() + money.toInt()).toString())
                         }
                     })
 

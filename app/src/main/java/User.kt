@@ -11,10 +11,12 @@ data class User(
     var children: MutableMap<String, String>
 ) : Serializable {
 
+
     var incomeRecords = mutableListOf<Record>()
     var expenseRecords = mutableListOf<Record>()
     var tasks = mutableListOf<Record>()
     var applys = mutableListOf<Record>()
+
 
     constructor(
         uid: String = "",

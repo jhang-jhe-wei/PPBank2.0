@@ -96,7 +96,7 @@ class m_taskFragment : Fragment() {
 
         fun setData(list:MutableList<Record>) {
             tasks=list
-            tasks.forEach { it->if (it.type.equals(IMMEDIATE)) immediateTask.add(it)else dailytask.add((it))}
+            tasks.forEach { it->if (it.type==IMMEDIATE) immediateTask.add(it)else dailytask.add((it))}
         }
 
         override fun getItemCount(): Int {
@@ -116,8 +116,8 @@ class m_taskFragment : Fragment() {
             fun bindRadio(i: Int) {
                 val content: TextView = itemView.findViewById(R.id.m_radioview_title)
                 val money: TextView = itemView.findViewById(R.id.m_radioview_content)
-                val index = i-immediateTask.size-4
-                content.text=dailytask.get(index).content
+                val index = i-immediateTask.size-3
+                content.text=dailytask.get(index).name
                 money.text=dailytask.get(index).money
             }
 
@@ -125,7 +125,7 @@ class m_taskFragment : Fragment() {
                 val content: TextView = itemView.findViewById(R.id.m_task_name)
                 val money: TextView = itemView.findViewById(R.id.m_task_prize)
                 val index = i-1
-                content.text=immediateTask.get(index).content
+                content.text=immediateTask.get(index).name
                 money.text=immediateTask.get(index).money
 
             }

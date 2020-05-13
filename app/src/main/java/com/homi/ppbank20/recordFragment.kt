@@ -84,7 +84,7 @@ class recordFragment : Fragment() {
                 val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
                 val date = simpleDateFormat.parse(data.get(i).date)
                 txv_record_date.text = "${date.month}/${date.day}"
-                txv_record_name.text = "$${data.get(i).name}"
+                txv_record_name.text = "${data.get(i).name}"
                 txv_record_money.text = "$${data.get(i).money}"
             }
         }
