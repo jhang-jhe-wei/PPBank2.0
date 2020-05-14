@@ -47,6 +47,7 @@ class M_accountFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         user = arguments?.getSerializable("user") as? User
         bundle.putSerializable("user", user)
+        Log.d(TAG, arguments?.getSerializable("task").toString())
         Log.d(TAG, user.toString())
         Log.d(TAG, user?.expenseRecords.toString())
         M_account_viewpager.adapter = viewPagerAdapter()

@@ -83,7 +83,8 @@ class ContentActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
                 override fun onDataChange(p0: DataSnapshot) {
                     user = p0.child("users").child(auth.uid.toString()).getValue(User::class.java)
                     bundle.putSerializable("user", user)
-                    updataUI()
+                    updata()
+                    initUI()
                 }
             })
             ref.child("users").child(auth.uid.toString())
@@ -95,6 +96,8 @@ class ContentActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
                         user?.money = p0.child("money").getValue().toString()
                         user?.incomes = p0.child("incomes").value as MutableMap<String, String>
                         user?.expenses = p0.child("expenses").value as MutableMap<String, String>
+                        bundle.putSerializable("user", user)
+                        updata()
                     }
                 })
 
@@ -112,9 +115,10 @@ class ContentActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
 
                     override fun onChildAdded(p0: DataSnapshot, p1: String?) {
                         val record = p0.getValue(Record::class.java)
-                        Log.d("ChildEventListener",record.toString())
+                        Log.d("ChildEventListener", record.toString())
                         record?.let { user?.incomeRecords?.add(it) }
                         bundle.putSerializable("user", user)
+                        updata()
                     }
 
                     override fun onChildRemoved(p0: DataSnapshot) {
@@ -135,18 +139,19 @@ class ContentActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
 
                     override fun onChildAdded(p0: DataSnapshot, p1: String?) {
                         val record = p0.getValue(Record::class.java)
-                        Log.d("ChildEventListener",record.toString())
+                        Log.d("ChildEventListener", record.toString())
                         record?.let { user?.expenseRecords?.add(it) }
                         bundle.putSerializable("user", user)
+                        updata()
                     }
 
                     override fun onChildRemoved(p0: DataSnapshot) {
                         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                     }
                 })
-            var uid:String=""
-            if(user?.parent=="")uid=user?.uid.toString()
-            else uid=user?.parent.toString()
+            var uid: String = ""
+            if (user?.parent == "") uid = user?.uid.toString()
+            else uid = user?.parent.toString()
             ref.child("applys").child(uid)
                 .addChildEventListener(object : ChildEventListener {
                     override fun onCancelled(p0: DatabaseError) {
@@ -161,9 +166,10 @@ class ContentActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
 
                     override fun onChildAdded(p0: DataSnapshot, p1: String?) {
                         val record = p0.getValue(Record::class.java)
-                        Log.d("ChildEventListener",record.toString())
+                        Log.d("ChildEventListener", record.toString())
                         record?.let { user?.applys?.add(it) }
                         bundle.putSerializable("user", user)
+                        updata()
                     }
 
                     override fun onChildRemoved(p0: DataSnapshot) {
@@ -184,9 +190,10 @@ class ContentActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
 
                     override fun onChildAdded(p0: DataSnapshot, p1: String?) {
                         val record = p0.getValue(Record::class.java)
-                        Log.d("ChildEventListener",record.toString())
+                        Log.d("ChildEventListener", record.toString())
                         record?.let { user?.tasks?.add(it) }
-                        bundle.putSerializable("user", user)
+
+                        updata()
                     }
 
                     override fun onChildRemoved(p0: DataSnapshot) {
@@ -199,12 +206,22 @@ class ContentActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
         }
     }
 
-    fun updataUI() {
+    fun initUI() {
         if (user?.type.equals(PARENT_TYPE)) {
             findNavController(R.id.navfragment).navigate(
                 R.id.m_accountFragment,
                 bundle
             )
+        } else {
+            findNavController(R.id.navfragment).navigate(
+                R.id.accountFragment,
+                intent.getBundleExtra("user")
+            )
+
+        }
+    }
+    fun updata() {
+        if (user?.type.equals(PARENT_TYPE)) {
             bottomNavigationView.setOnNavigationItemSelectedListener { item: MenuItem ->
                 when (item.itemId) {
                     R.id.menu_account -> {
@@ -281,7 +298,6 @@ class ContentActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
         }
     }
 }
-
 
 
 
