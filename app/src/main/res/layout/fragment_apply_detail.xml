@@ -88,7 +88,7 @@
             android:background="@drawable/tablelayout_frame">
 
             <Space
-                android:layout_width="32dp"
+                android:layout_width="40dp"
                 android:layout_height="50dp" />
 
             <Switch
@@ -117,7 +117,7 @@
             android:background="@drawable/tablelayout_frame">
 
             <Space
-                android:layout_width="32dp"
+                android:layout_width="40dp"
                 android:layout_height="50dp" />
 
             <Switch

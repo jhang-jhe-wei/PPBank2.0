@@ -197,9 +197,9 @@ class M_accountFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            if(data.size<=3)
+            if(data.size<=2)
                 return data.size
-            else return 3
+            else return 2
         }
 
         //	ViewHolder需要繼承RecycleView.ViewHolder

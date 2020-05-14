@@ -109,8 +109,8 @@ class m_taskFragment : Fragment() {
 
             fun bindTitle(i: Int) {
                 val title: TextView = itemView.findViewById(R.id.m_apply_title)
-                if (i == 0) title.text = "Immediate tasks"
-                else title.text = "Daily tasks"
+                if (i == 0) title.text = getString(R.string.Immediatetasks)
+                else title.text = getString(R.string.Dailytasks)
             }
 
             fun bindRadio(i: Int) {

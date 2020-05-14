@@ -102,8 +102,8 @@ class m_applyFragment : Fragment() {
 
             fun bindTitle(i: Int) {
                 val title: TextView = itemView.findViewById(R.id.m_apply_title)
-                if (i == 0) title.text = "Recently applied"
-                else title.text = "Function Setting"
+                if (i == 0) title.text = getString(R.string.Recentlyapplied)
+                else title.text = getString(R.string.FunctionSetting)
             }
 
             fun bindContent(i: Int) {

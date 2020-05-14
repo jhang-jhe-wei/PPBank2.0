@@ -60,5 +60,8 @@
     <string name="Addimmediatetask">Add immediate task</string>
     <string name="Adddailytask">Add daily task</string>
     <string name="limit">Up to 300 for a single apply</string>
+    <string name="Recentlyapplied">Recently applied</string>
+    <string name="FunctionSetting">Function Setting</string>
+
 
 </resources>

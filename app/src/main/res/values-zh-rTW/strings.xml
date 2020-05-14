@@ -55,4 +55,6 @@
     <string name="Addimmediatetask">新增即時任務</string>
     <string name="Adddailytask">新增日常任務</string>
     <string name="limit">單筆申請限制300元</string>
+    <string name="Recentlyapplied">最新申請</string>
+    <string name="FunctionSetting">功能設定</string>
 </resources>

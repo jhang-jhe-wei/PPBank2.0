@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/m_accountFragment">
+    app:startDestination="@id/loginActivity">
     <fragment
         android:id="@+id/accountFragment"
         android:name="com.homi.ppbank20.AccountFragment"
@@ -69,4 +69,9 @@
         android:name="com.homi.ppbank20.applyDetailFragment"
         android:label="fragment_apply_detail"
         tools:layout="@layout/fragment_apply_detail" />
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="com.homi.ppbank20.LoginActivity"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" />
 </navigation>
