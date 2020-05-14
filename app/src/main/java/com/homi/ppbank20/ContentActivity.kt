@@ -215,6 +215,7 @@ class ContentActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
     }
 
     fun updata() {
+
         if (user?.type.equals(PARENT_TYPE)) {
             findNavController(R.id.navfragment).navigate(
                 R.id.m_accountFragment,
@@ -223,6 +224,7 @@ class ContentActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
             bottomNavigationView.setOnNavigationItemSelectedListener { item: MenuItem ->
                 when (item.itemId) {
                     R.id.menu_account -> {
+
                         findNavController(R.id.navfragment).navigate(
                             R.id.m_accountFragment,
                             bundle

@@ -112,10 +112,10 @@ class AccountFragment : Fragment() {
         val pieChartData = PieChartData(pieData)
         pieChartData.setHasCenterCircle(true).setCenterText1(getString(R.string.sum)).setCenterText1FontSize(20)
             .centerText1Color =
-            Color.parseColor("#FF3C4D")
+            Color.parseColor("#169AA7")
         pieChartData.setHasCenterCircle(true).setCenterText2("$$sum").setCenterText2FontSize(20)
             .centerText2Color =
-            Color.parseColor("#FF3C4D")
+            Color.parseColor("#169AA7")
         pie_chart.setPieChartData(pieChartData)
 
         val recordAdapter = RecordAdapter()
@@ -173,10 +173,10 @@ class AccountFragment : Fragment() {
         val pieChartData = PieChartData(pieData)
         pieChartData.setHasCenterCircle(true).setCenterText1(getString(R.string.sum)).setCenterText1FontSize(20)
             .centerText1Color =
-            Color.parseColor("#FF3C4D")
+            Color.parseColor("#169AA7")
         pieChartData.setHasCenterCircle(true).setCenterText2("$$sum").setCenterText2FontSize(20)
             .centerText2Color =
-            Color.parseColor("#FF3C4D")
+            Color.parseColor("#169AA7")
         pie_chart.setPieChartData(pieChartData)
 
         val recordAdapter = RecordAdapter()

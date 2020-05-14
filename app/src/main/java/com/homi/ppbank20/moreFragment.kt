@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_content.*
 import kotlinx.android.synthetic.main.fragment_more.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -34,6 +35,8 @@ class moreFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        btn_signout.setOnClickListener { FirebaseAuth.getInstance().signOut() }
+        btn_signout.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+        }
     }
 }

@@ -6,10 +6,10 @@
     <color name="prime_color">#159BA7</color>
     <color name="white_color">#FFFFFF</color>
     <color name="bottomnavmenu">#F9F9F9</color>
-    <color name="colorPieChartDarker">#FF6371</color>
-    <color name="colorPieChartDark">#FF8A94</color>
-    <color name="colorPieChartLight">#FFB1B8</color>
-    <color name="colorPieChartLighter">#FFD9DC</color>
+    <color name="colorPieChartDarker">#1FA1AE</color>
+    <color name="colorPieChartDark">#47BCC4</color>
+    <color name="colorPieChartLight">#8AD7DD</color>
+    <color name="colorPieChartLighter">#1D7A83</color>
     <color name="bottom_menu_unpress_color">#8D9599</color>
 
 </resources>

@@ -2,6 +2,7 @@ package com.homi.ppbank20
 
 import Record
 import User
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -72,6 +73,8 @@ class Transfetmoneyragment : Fragment() {
             type_spinnerArrayAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             type_spinner.adapter = type_spinnerArrayAdapter
             btn_Transfer.setOnClickListener {
+                AlertDialog.Builder(context).setTitle("Message")
+                    .setMessage(getString(R.string.finish)).create().show()
                 val money = ed_transfer_money.text.toString()
                 val name = type_spinner.selectedItem.toString()
                 val content = ed_transfer_remark.text.toString()
