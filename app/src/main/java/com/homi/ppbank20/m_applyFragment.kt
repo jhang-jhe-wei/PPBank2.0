@@ -2,7 +2,6 @@ package com.homi.ppbank20
 
 import Record
 import User
-import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_m_apply.*
@@ -49,7 +49,7 @@ class m_applyFragment : Fragment() {
         m_apply_recycleview.adapter=recyclerView
     }
 
-    class applyAdapter : RecyclerView.Adapter<applyAdapter.PagerViewHolder>() {
+    inner class applyAdapter : RecyclerView.Adapter<applyAdapter.PagerViewHolder>() {
         var data = mutableListOf<Record>()
         private val TITLE = 0
         private val CONTENT = 1
@@ -98,7 +98,7 @@ class m_applyFragment : Fragment() {
 
         //	ViewHolder需要繼承RecycleView.ViewHolder
         inner class PagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
+            val bundle=Bundle()
 
             fun bindTitle(i: Int) {
                 val title: TextView = itemView.findViewById(R.id.m_apply_title)
@@ -111,10 +111,11 @@ class m_applyFragment : Fragment() {
                 val index = i - 1
                 val content: TextView = itemView.findViewById(R.id.txv_m_apply_content)
                 val money: TextView = itemView.findViewById(R.id.txv_m_apply_money)
-                content.text=data.get(index).content
+                content.text=data.get(index).name
                 money.text=data.get(index).money
                 itemView.setOnClickListener {
-                    Log.d(TAG,"OnClick")
+                    bundle.putSerializable("data",data.get(index))
+                    itemView.setOnClickListener { findNavController().navigate(R.id.applyDetailFragment, bundle) }
                 }
             }
 

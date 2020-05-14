@@ -10,12 +10,17 @@ data class User(
     var expenses: MutableMap<String, String>,
     var children: MutableMap<String, String>
 ) : Serializable {
+    var incomeRecords:MutableList<Record>
+    var expenseRecords:MutableList<Record>
+    var tasks:MutableList<Record>
+    var applys:MutableList<Record>
+    init {
+        incomeRecords = mutableListOf<Record>()
+        expenseRecords = mutableListOf<Record>()
+        tasks = mutableListOf<Record>()
+        applys = mutableListOf<Record>()
+    }
 
-
-    var incomeRecords = mutableListOf<Record>()
-    var expenseRecords = mutableListOf<Record>()
-    var tasks = mutableListOf<Record>()
-    var applys = mutableListOf<Record>()
 
 
     constructor(

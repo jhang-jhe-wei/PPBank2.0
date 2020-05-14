@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_taskdetail.*
 
@@ -61,7 +62,9 @@ class taskdetailFragment : Fragment() {
                 btn_taskDetail_accept.visibility = View.VISIBLE
                 btn_taskDetail_fin.visibility = View.VISIBLE
                 record.state="2"
+                record.name="task"
                 ref.setValue(record)
+                Transfetmoneyragment.transfermoney(record,FirebaseAuth.getInstance().uid.toString())
             }
         } }
 

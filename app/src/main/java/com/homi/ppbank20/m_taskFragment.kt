@@ -105,7 +105,7 @@ class m_taskFragment : Fragment() {
 
         //	ViewHolder需要繼承RecycleView.ViewHolder
         inner class PagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
+            val bundle=Bundle()
 
             fun bindTitle(i: Int) {
                 val title: TextView = itemView.findViewById(R.id.m_apply_title)
@@ -135,7 +135,6 @@ class m_taskFragment : Fragment() {
                 if(i==immediateTask.size+1) {
                     content.text = "Add immediate task"
                     itemView.setOnClickListener {
-                        val bundle=Bundle()
                         bundle.putString("type",IMMEDIATE)
                         findNavController().navigate(R.id.addTaskFragment,bundle)
                     }
@@ -143,7 +142,6 @@ class m_taskFragment : Fragment() {
                 else {
                     content.text = "Add daily task"
                     itemView.setOnClickListener {
-                        val bundle=Bundle()
                         bundle.putString("type",DAILY)
                         findNavController().navigate(R.id.addTaskFragment,bundle)
                     }

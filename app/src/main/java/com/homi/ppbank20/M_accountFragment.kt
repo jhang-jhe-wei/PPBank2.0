@@ -197,23 +197,25 @@ class M_accountFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            if(data.size<4)
+            if(data.size<=5)
                 return data.size
             else return 5
         }
 
         //	ViewHolder需要繼承RecycleView.ViewHolder
         inner class PagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            val txv_record_date:TextView=itemView.findViewById(R.id.txv_record_date)
-            val txv_record_name:TextView=itemView.findViewById(R.id.txv_record_name)
-            val txv_record_money:TextView=itemView.findViewById(R.id.txv_record_money)
+            val date:TextView=itemView.findViewById(R.id.txv_record_date)
+            val name:TextView=itemView.findViewById(R.id.txv_record_name)
+            val money:TextView=itemView.findViewById(R.id.txv_record_money)
 
             fun bindData(i: Int) {
-                val simpleDateFormat=SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
-                val date=simpleDateFormat.parse(data.get(i).date)
-                txv_record_date.text="${date.month}/${date.day}"
-                txv_record_name.text="${data.get(i).name}"
-                txv_record_money.text="$${data.get(i).money}"
+                val index =data.size-i-1
+                val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+                val time = simpleDateFormat.parse(data.get(index).date)
+                Log.d(TAG,data.get(index).toString())
+                date.text = "${time.month}/${time.day}"
+                name.text = "${data.get(index).name}"
+                money.text = "$${data.get(index).money}"
             }
         }
     }

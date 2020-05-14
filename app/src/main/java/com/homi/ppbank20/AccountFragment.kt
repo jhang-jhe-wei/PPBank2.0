@@ -121,7 +121,7 @@ class AccountFragment : Fragment() {
         val recordAdapter = RecordAdapter()
         recordAdapter.setList(user?.incomeRecords)
         account_RecyclerView.layoutManager=LinearLayoutManager(context)
-        account_RecyclerView.adapter = RecordAdapter()
+        account_RecyclerView.adapter = recordAdapter
     }
 
     fun expenseState() {
@@ -183,7 +183,7 @@ class AccountFragment : Fragment() {
         recordAdapter.setList(user?.expenseRecords)
         Log.d(TAG,user?.expenseRecords.toString())
         account_RecyclerView.layoutManager=LinearLayoutManager(context)
-        account_RecyclerView.adapter = RecordAdapter()
+        account_RecyclerView.adapter = recordAdapter
     }
 
     class RecordAdapter : RecyclerView.Adapter<RecordAdapter.PagerViewHolder>() {
@@ -206,7 +206,7 @@ class AccountFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            if(data.size<4)
+            if(data.size<=5)
                 return data.size
             else return 5
         }
@@ -218,12 +218,13 @@ class AccountFragment : Fragment() {
             val money: TextView = itemView.findViewById(R.id.txv_record_money)
 
             fun bindData(i: Int) {
+                val index =data.size-i-1
                 val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
-                val time = simpleDateFormat.parse(data.get(i).date)
-                Log.d(TAG,data.get(i).toString())
+                val time = simpleDateFormat.parse(data.get(index).date)
+                Log.d(TAG,data.get(index).toString())
                 date.text = "${time.month}/${time.day}"
-                name.text = "${data.get(i).uid} ${data.get(i).name}"
-                money.text = "$${data.get(i).money}"
+                name.text = "${data.get(index).name}"
+                money.text = "$${data.get(index).money}"
             }
         }
     }

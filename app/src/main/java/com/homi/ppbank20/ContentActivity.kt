@@ -74,17 +74,79 @@ class ContentActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
     override fun onAuthStateChanged(p0: FirebaseAuth) {
         var auth = p0.currentUser
         val ref = FirebaseDatabase.getInstance().reference
+        var uid="123"
         if (auth != null) {
             Log.d(TAG, "auth!=null")
             ref.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
                 }
 
-                override fun onDataChange(p0: DataSnapshot) {
-                    user = p0.child("users").child(auth.uid.toString()).getValue(User::class.java)
+                override fun onDataChange(dsp: DataSnapshot) {
+                    user = dsp.child("users").child(auth.uid.toString()).getValue(User::class.java)
+                    dsp.child("incomerecords").child(auth.uid.toString()).children.forEach { it ->
+                        val record = it.getValue(Record::class.java)
+                        record?.let { it1 -> user?.incomeRecords?.add(it1) }
+                    }
+                    dsp.child("expenserecords").child(auth.uid.toString()).children.forEach { it ->
+                        val record = it.getValue(Record::class.java)
+                        record?.let { it1 -> user?.expenseRecords?.add(it1) }
+                    }
+
+                    if (user?.parent == "") uid = user?.uid.toString()
+                    else uid = user?.parent.toString()
+                    dsp.child("applys").child(uid).children.forEach { it ->
+                        val record = it.getValue(Record::class.java)
+                        record?.let { it1 -> user?.applys?.add(it1) }
+                    }
+                    dsp.child("tasks").child(uid).children.forEach { it ->
+                        val record = it.getValue(Record::class.java)
+                        record?.let { it1 -> user?.tasks?.add(it1) }
+                    }
+                    ref.child("applys").child(uid)
+                        .addChildEventListener(object : ChildEventListener {
+                            override fun onCancelled(p0: DatabaseError) {
+
+                            }
+
+                            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+                            }
+
+                            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                            }
+
+                            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                                val record = p0.getValue(Record::class.java)
+                                record?.let { user?.applys?.add(it) }
+                                bundle.putSerializable("user", user)
+                            }
+
+                            override fun onChildRemoved(p0: DataSnapshot) {
+                                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                            }
+                        })
+                    ref.child("tasks").child(uid)
+                        .addChildEventListener(object : ChildEventListener {
+                            override fun onCancelled(p0: DatabaseError) {
+
+                            }
+
+                            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+                            }
+
+                            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                            }
+
+                            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                                val record = p0.getValue(Record::class.java)
+                                record?.let { user?.tasks?.add(it) }
+                            }
+
+                            override fun onChildRemoved(p0: DataSnapshot) {
+                                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                            }
+                        })
                     bundle.putSerializable("user", user)
                     updata()
-                    initUI()
                 }
             })
             ref.child("users").child(auth.uid.toString())
@@ -97,7 +159,6 @@ class ContentActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
                         user?.incomes = p0.child("incomes").value as MutableMap<String, String>
                         user?.expenses = p0.child("expenses").value as MutableMap<String, String>
                         bundle.putSerializable("user", user)
-                        updata()
                     }
                 })
 
@@ -118,7 +179,6 @@ class ContentActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
                         Log.d("ChildEventListener", record.toString())
                         record?.let { user?.incomeRecords?.add(it) }
                         bundle.putSerializable("user", user)
-                        updata()
                     }
 
                     override fun onChildRemoved(p0: DataSnapshot) {
@@ -142,58 +202,6 @@ class ContentActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
                         Log.d("ChildEventListener", record.toString())
                         record?.let { user?.expenseRecords?.add(it) }
                         bundle.putSerializable("user", user)
-                        updata()
-                    }
-
-                    override fun onChildRemoved(p0: DataSnapshot) {
-                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                    }
-                })
-            var uid: String = ""
-            if (user?.parent == "") uid = user?.uid.toString()
-            else uid = user?.parent.toString()
-            ref.child("applys").child(uid)
-                .addChildEventListener(object : ChildEventListener {
-                    override fun onCancelled(p0: DatabaseError) {
-
-                    }
-
-                    override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-                    }
-
-                    override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-                    }
-
-                    override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                        val record = p0.getValue(Record::class.java)
-                        Log.d("ChildEventListener", record.toString())
-                        record?.let { user?.applys?.add(it) }
-                        bundle.putSerializable("user", user)
-                        updata()
-                    }
-
-                    override fun onChildRemoved(p0: DataSnapshot) {
-                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                    }
-                })
-            ref.child("tasks").child(uid)
-                .addChildEventListener(object : ChildEventListener {
-                    override fun onCancelled(p0: DatabaseError) {
-
-                    }
-
-                    override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-                    }
-
-                    override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-                    }
-
-                    override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                        val record = p0.getValue(Record::class.java)
-                        Log.d("ChildEventListener", record.toString())
-                        record?.let { user?.tasks?.add(it) }
-
-                        updata()
                     }
 
                     override fun onChildRemoved(p0: DataSnapshot) {
@@ -206,22 +214,12 @@ class ContentActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
         }
     }
 
-    fun initUI() {
+    fun updata() {
         if (user?.type.equals(PARENT_TYPE)) {
             findNavController(R.id.navfragment).navigate(
                 R.id.m_accountFragment,
                 bundle
             )
-        } else {
-            findNavController(R.id.navfragment).navigate(
-                R.id.accountFragment,
-                intent.getBundleExtra("user")
-            )
-
-        }
-    }
-    fun updata() {
-        if (user?.type.equals(PARENT_TYPE)) {
             bottomNavigationView.setOnNavigationItemSelectedListener { item: MenuItem ->
                 when (item.itemId) {
                     R.id.menu_account -> {
@@ -259,7 +257,7 @@ class ContentActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
         } else {
             findNavController(R.id.navfragment).navigate(
                 R.id.accountFragment,
-                intent.getBundleExtra("user")
+                bundle
             )
             bottomNavigationView.setOnNavigationItemSelectedListener { item: MenuItem ->
                 when (item.itemId) {

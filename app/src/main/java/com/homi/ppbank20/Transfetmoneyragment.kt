@@ -23,7 +23,8 @@ import java.util.*
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
-private val TAG=Transfetmoneyragment::class.java.simpleName
+private val TAG = Transfetmoneyragment::class.java.simpleName
+
 /**
  * A simple [Fragment] subclass.
  * Use the [Transfetmoneyragment.newInstance] factory method to
@@ -71,13 +72,14 @@ class Transfetmoneyragment : Fragment() {
             type_spinnerArrayAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             type_spinner.adapter = type_spinnerArrayAdapter
             btn_Transfer.setOnClickListener {
-                val money=ed_transfer_money.text.toString()
-                val name=type_spinner.selectedItem.toString()
-                val content=ed_transfer_remark.text.toString()
-                val account=account_spinner.selectedItem.toString()
-                val password=ed_transfer_password.text.toString()
-                val key = FirebaseDatabase.getInstance().reference.child("incomerecords")
-                    .child(user?.uid.toString()).push().key
+                val money = ed_transfer_money.text.toString()
+                val name = type_spinner.selectedItem.toString()
+                val content = ed_transfer_remark.text.toString()
+                val account = account_spinner.selectedItem.toString()
+                val password = ed_transfer_password.text.toString()
+                val key =
+                    FirebaseDatabase.getInstance().reference.child("incomerecords").child(user?.uid.toString()).push()
+                        .key
                 val record = Record(
                     key.toString(),
                     user?.uid.toString(),
@@ -93,23 +95,6 @@ class Transfetmoneyragment : Fragment() {
                     money,
                     "", ""
                 )
-                val ref = FirebaseDatabase.getInstance().reference
-                ref.child("incomerecords").child(user?.uid.toString()).child(key.toString())
-                    .setValue(record)
-
-                ref.child("users").child(user?.uid.toString()).child("incomes").child(record.name)
-                    .addListenerForSingleValueEvent(object : ValueEventListener {
-                        override fun onCancelled(p0: DatabaseError) {
-                            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                        }
-
-                        override fun onDataChange(p0: DataSnapshot) {
-                            val buffer:String = p0.getValue().toString()
-                            ref.child("users").child(user?.uid.toString()).child("incomes")
-                                .child(record.name)
-                                .setValue((money.toInt() + buffer.toInt()).toString())
-                        }
-                    })
                 var childuid: String = ""
                 user?.children?.keys?.forEach { it ->
                     if (user?.children?.getValue(it.toString()).equals(
@@ -117,27 +102,51 @@ class Transfetmoneyragment : Fragment() {
                         )
                     ) childuid = it.toString()
                 }
-                ref.child("incomerecords").child(childuid).child(key.toString()).setValue(record)
-
-                ref.child("users").child(childuid).addListenerForSingleValueEvent(object : ValueEventListener {
-                        override fun onCancelled(p0: DatabaseError) {
-                            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                        }
-
-                        override fun onDataChange(p0: DataSnapshot) {
-                            val buffer1 = p0.child("money").getValue()
-                            val buffer=p0.child("incomes").child(record.name).getValue()
-
-                            ref.child("users").child(childuid).child("money")
-                                .setValue((buffer.toString().toInt() + money.toInt()).toString())
-                            ref.child("users").child(childuid).child("incomes").child(name)
-                                .setValue((buffer.toString().toInt() + money.toInt()).toString())
-                        }
-                    })
+                transfermoney(record, childuid)
 
             }
-
         }
 
     }
+
+    companion object {
+        fun transfermoney(record: Record, uid: String) {
+            val ref = FirebaseDatabase.getInstance().reference
+            ref.child("incomerecords").child(record?.uid.toString()).child(record.id)
+                .setValue(record)
+
+            ref.child("users").child(record.uid.toString()).child("incomes").child(record.name)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onCancelled(p0: DatabaseError) {
+                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    }
+
+                    override fun onDataChange(p0: DataSnapshot) {
+                        val buffer: String = p0.getValue().toString()
+                        ref.child("users").child(record.uid.toString()).child("incomes")
+                            .child(record.name)
+                            .setValue((record.money.toInt() + buffer.toInt()).toString())
+                    }
+                })
+            ref.child("incomerecords").child(uid).child(record.id).setValue(record)
+
+            ref.child("users").child(uid)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onCancelled(p0: DatabaseError) {
+                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    }
+
+                    override fun onDataChange(p0: DataSnapshot) {
+                        val buffer1 = p0.child("money").getValue()
+                        val buffer = p0.child("incomes").child(record.name).getValue()
+
+                        ref.child("users").child(uid).child("money")
+                            .setValue((buffer1.toString().toInt() + record.money.toInt()).toString())
+                        ref.child("users").child(uid).child("incomes").child(record.name)
+                            .setValue((buffer.toString().toInt() + record.money.toInt()).toString())
+                    }
+                })
+        }
+    }
 }
+
