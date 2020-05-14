@@ -96,8 +96,8 @@ class taskFragment : Fragment() {
             val bundle=Bundle()
             fun bindTitle(i: Int) {
                 val title: TextView = itemView.findViewById(R.id.m_apply_title)
-                if (i == 0) title.text = "Immediate tasks"
-                else title.text = "Daily tasks"
+                if (i == 0) title.text = getString(R.string.Immediatetasks)
+                else title.text = getString(R.string.Dailytasks)
             }
 
             fun bindContent(i: Int) {

@@ -69,10 +69,10 @@ class AccountFragment : Fragment() {
         bundle.putString("type","income")
         btn_more.setOnClickListener { findNavController().navigate(R.id.recordFragment, bundle) }
         //設定圓餅圖右方敘述
-        tbx_pie_detail01.setText("prize")
-        tbx_pie_detail02.setText("apply")
-        tbx_pie_detail03.setText("task")
-        tbx_pie_detail04.setText("pocket money")
+        tbx_pie_detail01.setText(getString(R.string.prize))
+        tbx_pie_detail02.setText(getString(R.string.apply))
+        tbx_pie_detail03.setText(getString(R.string.task))
+        tbx_pie_detail04.setText(getString(R.string.pocketmoney))
         var pieData: MutableList<SliceValue>
         pieData = mutableListOf()
 
@@ -110,7 +110,7 @@ class AccountFragment : Fragment() {
 
         //設定圓餅圖 之後要改用data塞
         val pieChartData = PieChartData(pieData)
-        pieChartData.setHasCenterCircle(true).setCenterText1("Sum").setCenterText1FontSize(20)
+        pieChartData.setHasCenterCircle(true).setCenterText1(getString(R.string.sum)).setCenterText1FontSize(20)
             .centerText1Color =
             Color.parseColor("#FF3C4D")
         pieChartData.setHasCenterCircle(true).setCenterText2("$$sum").setCenterText2FontSize(20)
@@ -130,10 +130,10 @@ class AccountFragment : Fragment() {
         bundle.putString("type","expense")
         btn_more.setOnClickListener { findNavController().navigate(R.id.recordFragment, bundle) }
         //設定圓餅圖右方敘述
-        tbx_pie_detail01.setText("food")
-        tbx_pie_detail02.setText("daily supplies")
-        tbx_pie_detail03.setText("entertainment")
-        tbx_pie_detail04.setText("other")
+        tbx_pie_detail01.setText(getString(R.string.food))
+        tbx_pie_detail02.setText(getString(R.string.dailysupplies))
+        tbx_pie_detail03.setText(R.string.entertainment)
+        tbx_pie_detail04.setText(R.string.other)
         var pieData: MutableList<SliceValue>
         pieData = mutableListOf()
 
@@ -171,7 +171,7 @@ class AccountFragment : Fragment() {
 
         //設定圓餅圖 之後要改用data塞
         val pieChartData = PieChartData(pieData)
-        pieChartData.setHasCenterCircle(true).setCenterText1("Sum").setCenterText1FontSize(20)
+        pieChartData.setHasCenterCircle(true).setCenterText1(getString(R.string.sum)).setCenterText1FontSize(20)
             .centerText1Color =
             Color.parseColor("#FF3C4D")
         pieChartData.setHasCenterCircle(true).setCenterText2("$$sum").setCenterText2FontSize(20)
@@ -206,9 +206,9 @@ class AccountFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            if(data.size<=5)
+            if(data.size<=3)
                 return data.size
-            else return 5
+            else return 3
         }
 
         //	ViewHolder需要繼承RecycleView.ViewHolder

@@ -133,14 +133,14 @@ class m_taskFragment : Fragment() {
             fun bindSetting(i: Int) {
                 val content:TextView=itemView.findViewById(R.id.task_add_content)
                 if(i==immediateTask.size+1) {
-                    content.text = "Add immediate task"
+                    content.text = getString(R.string.Addimmediatetask)
                     itemView.setOnClickListener {
                         bundle.putString("type",IMMEDIATE)
                         findNavController().navigate(R.id.addTaskFragment,bundle)
                     }
                 }
                 else {
-                    content.text = "Add daily task"
+                    content.text = getString(R.string.Adddailytask)
                     itemView.setOnClickListener {
                         bundle.putString("type",DAILY)
                         findNavController().navigate(R.id.addTaskFragment,bundle)

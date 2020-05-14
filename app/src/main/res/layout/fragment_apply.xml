@@ -57,7 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/red_frame"
-        android:text="commit"
+        android:text="@string/commit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline9"
         app:layout_constraintStart_toStartOf="@+id/guideline7"
@@ -91,7 +91,7 @@
             android:id="@+id/title_apply_remain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Number of remaining award applications:"
+            android:text="@string/number_of_remaining_award_applications"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:textColor="@android:color/darker_gray" />
 
@@ -117,7 +117,7 @@
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Type"
+            android:text="@string/type"
             android:textColor="@android:color/darker_gray" />
 
         <Spinner
@@ -127,7 +127,6 @@
             android:layout_height="wrap_content"
             android:background="@drawable/white_solid_balck_stroke"
             android:entries="@array/expense_array"
-
             android:spinnerMode="dropdown" />
     </LinearLayout>
 
@@ -145,7 +144,7 @@
             android:id="@+id/textView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Apply money"
+            android:text="@string/apply_money"
             android:textColor="@android:color/darker_gray" />
 
         <EditText
@@ -174,7 +173,7 @@
             android:id="@+id/textView11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Remakes"
+            android:text="@string/remakes"
             android:textColor="@android:color/darker_gray" />
 
         <EditText
@@ -203,7 +202,7 @@
             android:id="@+id/textView12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="prove"
+            android:text="@string/prove"
             android:textColor="@android:color/darker_gray" />
 
         <ImageView

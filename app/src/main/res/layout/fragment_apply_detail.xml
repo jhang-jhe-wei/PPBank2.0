@@ -67,7 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/red_frame"
-        android:text="Finish"
+        android:text="@string/finish"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -106,7 +106,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:paddingLeft="10dp"
-                android:text="notify"
+                android:text="@string/notify"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@color/design_default_color_on_secondary" />
         </TableRow>
@@ -135,7 +135,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:paddingLeft="10dp"
-                android:text="clock"
+                android:text="@string/clock"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@color/design_default_color_on_secondary" />
         </TableRow>

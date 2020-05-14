@@ -63,10 +63,10 @@ class M_accountFragment : Fragment() {
         bundle.putString("type","income")
         btn_m_more.setOnClickListener { findNavController().navigate(R.id.recordFragment,bundle) }
         //設定圓餅圖右方敘述
-        M_tbx_pie_detail01.setText("prize")
-        M_tbx_pie_detail02.setText("apply")
-        M_tbx_pie_detail03.setText("task")
-        M_tbx_pie_detail04.setText("pocket money")
+        M_tbx_pie_detail01.setText(getString(R.string.prize))
+        M_tbx_pie_detail02.setText(getString(R.string.apply))
+        M_tbx_pie_detail03.setText(getString(R.string.task))
+        M_tbx_pie_detail04.setText(getString(R.string.pocketmoney))
         var pieData: MutableList<SliceValue>
         pieData = mutableListOf()
 
@@ -104,7 +104,7 @@ class M_accountFragment : Fragment() {
 
         //設定圓餅圖 之後要改用data塞
         val pieChartData = PieChartData(pieData)
-        pieChartData.setHasCenterCircle(true).setCenterText1("Sum").setCenterText1FontSize(20)
+        pieChartData.setHasCenterCircle(true).setCenterText1(getString(R.string.sum)).setCenterText1FontSize(20)
             .centerText1Color =
             Color.parseColor("#FF3C4D")
         pieChartData.setHasCenterCircle(true).setCenterText2("$$sum").setCenterText2FontSize(20)
@@ -122,10 +122,10 @@ class M_accountFragment : Fragment() {
         bundle.putString("type","expense")
         btn_m_more.setOnClickListener { findNavController().navigate(R.id.recordFragment,bundle) }
         //設定圓餅圖右方敘述
-        M_tbx_pie_detail01.setText("food")
-        M_tbx_pie_detail02.setText("daily supplies")
-        M_tbx_pie_detail03.setText("entertainment")
-        M_tbx_pie_detail04.setText("other")
+        M_tbx_pie_detail01.setText(getString(R.string.food))
+        M_tbx_pie_detail02.setText(getString(R.string.dailysupplies))
+        M_tbx_pie_detail03.setText(getString(R.string.entertainment))
+        M_tbx_pie_detail04.setText(getString(R.string.other))
         var pieData: MutableList<SliceValue>
         pieData = mutableListOf()
 
@@ -163,7 +163,7 @@ class M_accountFragment : Fragment() {
 
         //設定圓餅圖 之後要改用data塞
         val pieChartData = PieChartData(pieData)
-        pieChartData.setHasCenterCircle(true).setCenterText1("Sum").setCenterText1FontSize(20)
+        pieChartData.setHasCenterCircle(true).setCenterText1(getString(R.string.sum)).setCenterText1FontSize(20)
             .centerText1Color =
             Color.parseColor("#FF3C4D")
         pieChartData.setHasCenterCircle(true).setCenterText2("$$sum").setCenterText2FontSize(20)
@@ -197,9 +197,9 @@ class M_accountFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            if(data.size<=5)
+            if(data.size<=3)
                 return data.size
-            else return 5
+            else return 3
         }
 
         //	ViewHolder需要繼承RecycleView.ViewHolder
@@ -220,7 +220,7 @@ class M_accountFragment : Fragment() {
         }
     }
 
-    class viewPagerAdapter : RecyclerView.Adapter<viewPagerAdapter.PagerViewHolder>() {
+    inner class viewPagerAdapter : RecyclerView.Adapter<viewPagerAdapter.PagerViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerViewHolder {
             val itemView = LayoutInflater.from(parent.context)
                 .inflate(R.layout.viewpager_layout, parent, false)
@@ -236,7 +236,7 @@ class M_accountFragment : Fragment() {
         }
 
         //	ViewHolder需要繼承RecycleView.ViewHolder
-        class PagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        inner class PagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             private val txv_M_viewpager_leftbottom: TextView =
                 itemView.findViewById(R.id.txv_M_viewpager_leftbottom)
             private val txv_M_viewpager_leftcenter: TextView =
@@ -252,19 +252,19 @@ class M_accountFragment : Fragment() {
 
             fun bindData(i: Int) {
                 if (i == 0) {
-                    txv_M_viewpager_leftbottom.text = "Budget balance"
-                    txv_M_viewpager_leftcenter.text = "expenditure"
-                    txv_M_viewpager_lefttop.text = "budget"
+                    txv_M_viewpager_leftbottom.text = context?.getString(R.string.Budgetbalance)
+                    txv_M_viewpager_leftcenter.text = context?.getString(R.string.expenditure)
+                    txv_M_viewpager_lefttop.text = context?.getString(R.string.budget)
                     txv_M_viewpager_rightbottom.text = "$8787"
                     txv_M_viewpager_rightcenter.text = "$8787"
                     txv_M_viewpager_righttop.text = "$8787"
                 } else {
-                    txv_M_viewpager_leftbottom.text = "Budget balance"
-                    txv_M_viewpager_leftcenter.text = "expenditure"
-                    txv_M_viewpager_lefttop.text = "budget"
-                    txv_M_viewpager_rightbottom.text = "$8787"
-                    txv_M_viewpager_rightcenter.text = "$8787"
-                    txv_M_viewpager_righttop.text = "$8787"
+                    txv_M_viewpager_leftbottom.text = context?.getString(R.string.Budgetbalance)
+                    txv_M_viewpager_leftcenter.text = context?.getString(R.string.expenditure)
+                    txv_M_viewpager_lefttop.text = context?.getString(R.string.budget)
+                    txv_M_viewpager_rightbottom.text = "$7878"
+                    txv_M_viewpager_rightcenter.text = "$7878"
+                    txv_M_viewpager_righttop.text = "$7878"
                 }
             }
         }

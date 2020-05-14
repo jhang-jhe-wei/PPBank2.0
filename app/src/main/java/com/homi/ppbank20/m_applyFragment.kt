@@ -120,16 +120,16 @@ class m_applyFragment : Fragment() {
             }
 
             fun bindSetting(i: Int) {
-                val index=i-data.size
+                val index=i-data.size-2
                 val title:TextView=itemView.findViewById(R.id.radioview_title)
                 val content:TextView=itemView.findViewById(R.id.radioview_content)
-                if(index==1) {
-                    title.text = "expense"
-                    content.text="Up to 300 for a single apply"
+                if(index==0) {
+                    title.text = getString(R.string.expense)
+                    content.text=getString(R.string.limit)
                 }
                 else {
-                    title.text = "prize"
-                    content.text="Up to 3000 for a single apply"
+                    title.text = getString(R.string.prize)
+                    content.text=getString(R.string.limit)
                 }
             }
 
