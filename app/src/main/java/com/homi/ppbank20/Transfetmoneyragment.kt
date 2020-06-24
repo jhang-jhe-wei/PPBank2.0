@@ -73,40 +73,50 @@ class Transfetmoneyragment : Fragment() {
             type_spinnerArrayAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             type_spinner.adapter = type_spinnerArrayAdapter
             btn_Transfer.setOnClickListener {
-                AlertDialog.Builder(context).setTitle("Message")
-                    .setMessage(getString(R.string.finish)).create().show()
-                val money = ed_transfer_money.text.toString()
-                val name = type_spinner.selectedItem.toString()
-                val content = ed_transfer_remark.text.toString()
-                val account = account_spinner.selectedItem.toString()
-                val password = ed_transfer_password.text.toString()
-                val key =
-                    FirebaseDatabase.getInstance().reference.child("incomerecords").child(user?.uid.toString()).push()
-                        .key
-                val record = Record(
-                    key.toString(),
-                    user?.uid.toString(),
-                    SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(
-                        Calendar.getInstance(
-                            TimeZone.getTimeZone(
-                                "GMT+8"
+                if (!ed_transfer_money.text.isEmpty()) {
+                    AlertDialog.Builder(context).setTitle("提醒")
+                        .setMessage(getString(R.string.finish)).setNegativeButton("好的", null).create()
+                        .show()
+                    val money = ed_transfer_money.text.toString()
+                    val name = type_spinner.selectedItem.toString()
+                    val content = ed_transfer_remark.text.toString()
+                    val account = account_spinner.selectedItem.toString()
+                    val password = ed_transfer_password.text.toString()
+                    val key =
+                        FirebaseDatabase.getInstance().reference.child("incomerecords").child(user?.uid.toString()).push()
+                            .key
+                    val record = Record(
+                        key.toString(),
+                        user?.uid.toString(),
+                        SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(
+                            Calendar.getInstance(
+                                TimeZone.getTimeZone(
+                                    "GMT+8"
+                                )
+                            ).time
+                        ),
+                        name,
+                        content,
+                        money,
+                        "", ""
+                    )
+                    var childuid: String = ""
+                    user?.children?.keys?.forEach { it ->
+                        if (user?.children?.getValue(it.toString()).equals(
+                                account
                             )
-                        ).time
-                    ),
-                    name,
-                    content,
-                    money,
-                    "", ""
-                )
-                var childuid: String = ""
-                user?.children?.keys?.forEach { it ->
-                    if (user?.children?.getValue(it.toString()).equals(
-                            account
-                        )
-                    ) childuid = it.toString()
+                        ) childuid = it.toString()
+                    }
+                    transfermoney(record, childuid)
+                    ed_transfer_money.text.clear()
+                    ed_transfer_remark.text.clear()
+                    ed_transfer_password.text.clear()
                 }
-                transfermoney(record, childuid)
-
+                else{
+                    AlertDialog.Builder(context).setTitle("提醒")
+                        .setMessage("輸入錯誤!").setNegativeButton("重新輸入", null).create()
+                        .show()
+                }
             }
         }
 

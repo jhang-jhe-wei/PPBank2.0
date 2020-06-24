@@ -41,7 +41,7 @@
     <string name="add_task">Add Task</string>
     <string name="notify">notify</string>
     <string name="clock">clock</string>
-    <string name="finish">Finish</string>
+    <string name="finish">已發送~</string>
 
     <string name="apply">apply</string>
     <string name="task">task</string>
@@ -62,6 +62,10 @@
     <string name="limit">Up to 300 for a single apply</string>
     <string name="Recentlyapplied">Recently applied</string>
     <string name="FunctionSetting">Function Setting</string>
+    <string name="parent_uid">Parent Uid</string>
+    <string name="privacy_n_policy">privacy \n policy</string>
+    <string name="new_account">New Account</string>
+    <string name="privacypolicy">privacy policy</string>
 
 
 </resources>

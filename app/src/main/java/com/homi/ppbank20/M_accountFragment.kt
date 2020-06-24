@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CalendarView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -17,6 +18,7 @@ import kotlinx.android.synthetic.main.fragment_m_accout.*
 import lecho.lib.hellocharts.model.PieChartData
 import lecho.lib.hellocharts.model.SliceValue
 import java.text.SimpleDateFormat
+import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,6 +62,7 @@ class M_accountFragment : Fragment() {
 
     }
     fun parentState(){
+        M_account_viewpager.isUserInputEnabled=false
         bundle.putString("type","income")
         btn_m_more.setOnClickListener { findNavController().navigate(R.id.recordFragment,bundle) }
         //設定圓餅圖右方敘述
@@ -119,6 +122,7 @@ class M_accountFragment : Fragment() {
     }
 
     fun childState(){
+        M_account_viewpager.isUserInputEnabled=true
         bundle.putString("type","expense")
         btn_m_more.setOnClickListener { findNavController().navigate(R.id.recordFragment,bundle) }
         //設定圓餅圖右方敘述
@@ -213,7 +217,9 @@ class M_accountFragment : Fragment() {
                 val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
                 val time = simpleDateFormat.parse(data.get(index).date)
                 Log.d(TAG,data.get(index).toString())
-                date.text = "${time.month}/${time.day}"
+                val cal: Calendar = Calendar.getInstance()
+                cal.setTime(time)
+                date.text = "${cal.get(Calendar.MONTH)+1}/${cal.get(Calendar.DAY_OF_MONTH)}"
                 name.text = "${data.get(index).name}"
                 money.text = "$${data.get(index).money}"
             }
@@ -252,12 +258,20 @@ class M_accountFragment : Fragment() {
 
             fun bindData(i: Int) {
                 if (i == 0) {
+                    var income_sum =
+                        user?.incomes?.get("prize").toString().toFloat() + user?.incomes?.get("apply").toString().toFloat() + user?.incomes?.get(
+                            "task"
+                        ).toString().toFloat() + user?.incomes?.get("pocketmoney").toString().toFloat()
+                    var expense_sum =
+                        user?.expenses?.get("food").toString().toFloat() + user?.expenses?.get("dailysupplies").toString().toFloat() + user?.expenses?.get(
+                            "entertainment"
+                        ).toString().toFloat() + user?.expenses?.get("other").toString().toFloat()
                     txv_M_viewpager_leftbottom.text = context?.getString(R.string.Budgetbalance)
                     txv_M_viewpager_leftcenter.text = context?.getString(R.string.expenditure)
                     txv_M_viewpager_lefttop.text = context?.getString(R.string.budget)
-                    txv_M_viewpager_rightbottom.text = "$8787"
-                    txv_M_viewpager_rightcenter.text = "$8787"
-                    txv_M_viewpager_righttop.text = "$8787"
+                    txv_M_viewpager_rightbottom.text = income_sum.toString()
+                    txv_M_viewpager_rightcenter.text = expense_sum.toString()
+                    txv_M_viewpager_righttop.text = (income_sum-expense_sum).toString()
                 } else {
                     txv_M_viewpager_leftbottom.text = context?.getString(R.string.Budgetbalance)
                     txv_M_viewpager_leftcenter.text = context?.getString(R.string.expenditure)

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_record.*
 import java.text.SimpleDateFormat
+import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -81,12 +82,17 @@ class recordFragment : Fragment() {
             val txv_record_money: TextView = itemView.findViewById(R.id.txv_record_money)
 
             fun bindData(i: Int) {
+                val index=data.size-1-i;
                 val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
-                val date = simpleDateFormat.parse(data.get(i).date)
-                txv_record_date.text = "${date.month}/${date.day}"
-                txv_record_name.text = "${data.get(i).name}"
-                txv_record_money.text = "$${data.get(i).money}"
+                val date = simpleDateFormat.parse(data.get(index).date)
+                val cal: Calendar = Calendar.getInstance()
+                cal.setTime(date)
+                Log.d(TAG,data.get(index).date)
+                txv_record_date.text = "${cal.get(Calendar.MONTH)+1}/${cal.get(Calendar.DAY_OF_MONTH)}"
+                txv_record_name.text = "${data.get(index).name}"
+                txv_record_money.text = "$${data.get(index).money}"
             }
         }
     }
+
 }

@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "703761969636",
+    "firebase_url": "https://ppbank20-766ec.firebaseio.com",
+    "project_id": "ppbank20-766ec",
+    "storage_bucket": "ppbank20-766ec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:703761969636:android:7905e8f22a9e0bace417f1",
+        "android_client_info": {
+          "package_name": "com.homi.ppbank20"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "703761969636-be71kqnkp7le80om44r8pgiolle0dhsk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.homi.ppbank20",
+            "certificate_hash": "62ceba1863866cc1971edb04e12e6435486436f3"
+          }
+        },
+        {
+          "client_id": "703761969636-6898v6nooclb47p2nkqjho55vtob5moa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.homi.ppbank20",
+            "certificate_hash": "07314225fe010a4d84ebe16db954e3fea73b39a4"
+          }
+        },
+        {
+          "client_id": "703761969636-s1i1qcujbl66lfkigsklbnuqjosl1ko9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEwaWKGdJzRMChUncJFWetDfgxu_z5Lik"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "703761969636-s1i1qcujbl66lfkigsklbnuqjosl1ko9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

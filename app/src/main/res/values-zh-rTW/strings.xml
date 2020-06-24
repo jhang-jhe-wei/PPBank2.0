@@ -57,4 +57,8 @@
     <string name="limit">單筆申請限制300元</string>
     <string name="Recentlyapplied">最新申請</string>
     <string name="FunctionSetting">功能設定</string>
+    <string name="parent_uid">母帳戶ID</string>
+    <string name="privacy_n_policy">隱私權條款</string>
+    <string name="new_account">新帳戶</string>
+    <string name="privacypolicy">隱私權條款</string>
 </resources>

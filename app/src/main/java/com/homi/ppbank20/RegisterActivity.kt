@@ -120,7 +120,7 @@ class RegisterActivity : AppCompatActivity() {
                 })
         }
         btn_privacy_policy.setOnClickListener {
-            AlertDialog.Builder(this).setTitle("privacy policy")
+            AlertDialog.Builder(this).setTitle(getString(R.string.privacypolicy))
                 .setMessage(getString(R.string.privacy_policy)).setPositiveButton("Ok", null).show()
         }
     }

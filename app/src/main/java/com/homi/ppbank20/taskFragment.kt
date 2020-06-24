@@ -104,14 +104,15 @@ class taskFragment : Fragment() {
                 val content: TextView = itemView.findViewById(R.id.task_name)
                 val money: TextView = itemView.findViewById(R.id.task_prize)
                 if(i<=immediateTask.size) {
-                    val index = i - 1
+                    Log.d(TAG,immediateTask.size.toString())
+                    val index = immediateTask.size-(i - 1)-1
                     content.text = immediateTask.get(index).name
                     money.text = immediateTask.get(index).money
                     bundle.putSerializable("data",immediateTask.get(index))
                     itemView.setOnClickListener { findNavController().navigate(R.id.taskdetailFragment, bundle) }
                 }
                 else {
-                    val index = i - immediateTask.size-2
+                    val index = dailytask.size-(i - immediateTask.size-2)-1
                     content.text = dailytask.get(index).name
                     money.text = dailytask.get(index).money
                     bundle.putSerializable("data",dailytask.get(index))

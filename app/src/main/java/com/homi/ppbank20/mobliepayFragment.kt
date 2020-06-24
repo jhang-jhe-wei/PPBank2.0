@@ -62,8 +62,9 @@ class mobliepayFragment : Fragment() {
         expense_spinnerArrayAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         expense_spinner.adapter = expense_spinnerArrayAdapter
         btn_mobliepay.setOnClickListener {
-            AlertDialog.Builder(context).setTitle("Message")
-                .setMessage(getString(R.string.finish)).create().show()
+            AlertDialog.Builder(context).setTitle("提醒")
+                .setMessage("已記錄").setNegativeButton("好的",null).create().show()
+
             val key = FirebaseDatabase.getInstance().reference.child("applys").child(user?.uid.toString()).push().key
             val record = Record(
                 key.toString(),

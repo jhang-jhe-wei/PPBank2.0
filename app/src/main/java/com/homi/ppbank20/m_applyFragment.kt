@@ -88,6 +88,7 @@ class m_applyFragment : Fragment() {
         fun setList(list: MutableList<Record>?) {
             if (list != null) {
                 data = list
+                data.reverse()
             }
             Log.d(TAG,data.toString())
         }
@@ -108,7 +109,7 @@ class m_applyFragment : Fragment() {
 
             fun bindContent(i: Int) {
                 Log.d(TAG,"OnCall")
-                val index = i - 1
+                val index = data.size-(i - 1)-1
                 val content: TextView = itemView.findViewById(R.id.txv_m_apply_content)
                 val money: TextView = itemView.findViewById(R.id.txv_m_apply_money)
                 content.text=data.get(index).name

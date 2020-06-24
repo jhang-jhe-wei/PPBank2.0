@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.fragment_account.*
 import lecho.lib.hellocharts.model.PieChartData
 import lecho.lib.hellocharts.model.SliceValue
 import java.text.SimpleDateFormat
+import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -221,8 +222,10 @@ class AccountFragment : Fragment() {
                 val index =data.size-i-1
                 val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
                 val time = simpleDateFormat.parse(data.get(index).date)
+                val cal: Calendar = Calendar.getInstance()
+                cal.setTime(time)
                 Log.d(TAG,data.get(index).toString())
-                date.text = "${time.month}/${time.day}"
+                date.text = "${cal.get(Calendar.MONTH)+1}/${cal.get(Calendar.DAY_OF_MONTH)}"
                 name.text = "${data.get(index).name}"
                 money.text = "$${data.get(index).money}"
             }
