@@ -269,9 +269,9 @@ class M_accountFragment : Fragment() {
                     txv_M_viewpager_leftbottom.text = context?.getString(R.string.Budgetbalance)
                     txv_M_viewpager_leftcenter.text = context?.getString(R.string.expenditure)
                     txv_M_viewpager_lefttop.text = context?.getString(R.string.budget)
-                    txv_M_viewpager_rightbottom.text = income_sum.toString()
-                    txv_M_viewpager_rightcenter.text = expense_sum.toString()
-                    txv_M_viewpager_righttop.text = (income_sum-expense_sum).toString()
+                    txv_M_viewpager_rightbottom.text = income_sum.toInt().toString()
+                    txv_M_viewpager_rightcenter.text = expense_sum.toInt().toString()
+                    txv_M_viewpager_righttop.text = (income_sum-expense_sum).toInt().toString()
                 } else {
                     txv_M_viewpager_leftbottom.text = context?.getString(R.string.Budgetbalance)
                     txv_M_viewpager_leftcenter.text = context?.getString(R.string.expenditure)

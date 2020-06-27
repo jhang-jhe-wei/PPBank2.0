@@ -4,6 +4,7 @@ import Record
 import User
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -84,7 +85,9 @@ class ApplyFragment : Fragment() {
         btn_apply_commit.setOnClickListener {
             if (!apply_money.text.isEmpty()) {
                 AlertDialog.Builder(context).setTitle("提醒")
-                    .setMessage(getString(R.string.finish)).setNegativeButton("好的",null).create().show()
+                    .setMessage(getString(R.string.finish)).setNegativeButton("好的",{ dialogInterface: DialogInterface, i: Int ->
+
+                    }).create().show()
                 val key =
                     FirebaseDatabase.getInstance().reference.child("applys").child(user?.uid.toString())
                         .push().key
@@ -113,7 +116,10 @@ class ApplyFragment : Fragment() {
             }
             else{
                 AlertDialog.Builder(context).setTitle("提醒")
-                    .setMessage("輸入錯誤!").setNegativeButton("重新輸入", null).create()
+                    .setMessage("輸入錯誤!").setNegativeButton("重新輸入", { dialogInterface: DialogInterface, i: Int ->
+                        apply_content.text.clear()
+                        apply_money.text.clear()
+                    }).create()
                     .show()
             }
         }

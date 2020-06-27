@@ -94,161 +94,107 @@ class ContentActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
 
                     if (user?.parent == "") uid = user?.uid.toString()
                     else uid = user?.parent.toString()
-                    dsp.child("applys").child(uid).children.forEach { it ->
-                        val record = it.getValue(Record::class.java)
-                        record?.let { it1 -> user?.applys?.add(it1) }
-                    }
-                    dsp.child("tasks").child(uid).children.forEach { it ->
-                        val record = it.getValue(Record::class.java)
-                        record?.let { it1 -> user?.tasks?.add(it1) }
+                    Log.d(TAG, "uid=$uid")
+                    ref.child("applys").child(uid)
+                        .addChildEventListener(object : ChildEventListener {
+                            override fun onCancelled(p0: DatabaseError) {
 
-                    }
-//                    ref.child("applys").child(uid)
-//                        .addChildEventListener(object : ChildEventListener {
-//                            override fun onCancelled(p0: DatabaseError) {
-//
-//                            }
-//
-//                            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-//                            }
-//
-//                            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-//                            }
-//
-//                            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-//                                val record = p0.getValue(Record::class.java)
-//                                Log.d(TAG, record.toString())
-//                                if (user?.applys!=null) {
-//                                    if (!user?.applys?.last()?.id.equals(record?.id))
-//                                        record?.let { user?.applys?.add(it) }
-//                                }
-//                                bundle.putSerializable("user", user)
-//                            }
-//
-//                            override fun onChildRemoved(p0: DataSnapshot) {
-//                                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//                            }
-//                        })
-//                    ref.child("tasks").child(uid)
-//                        .addChildEventListener(object : ChildEventListener {
-//                            override fun onCancelled(p0: DatabaseError) {
-//
-//                            }
-//
-//                            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-//                            }
-//
-//                            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-//                            }
-//
-//                            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-//                                val record = p0.getValue(Record::class.java)
-//                                if (user?.tasks!=null) {
-//                                    if (!user?.tasks?.last()?.id.equals(record?.id))
-//                                        record?.let { user?.tasks?.add(it) }
-//                                }
-//                                Log.d(TAG, record.toString())
-//                            }
-//
-//                            override fun onChildRemoved(p0: DataSnapshot) {
-//                                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//                            }
-//                        })
+                            }
+
+                            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+                            }
+
+                            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                            }
+
+                            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                                val record = p0.getValue(Record::class.java)
+                                Log.d(TAG, record.toString())
+                                if (!user?.applys?.contains(record)!!)
+                                    record?.let { user?.applys?.add(it) }
+                                bundle.putSerializable("user", user)
+                            }
+
+                            override fun onChildRemoved(p0: DataSnapshot) {
+                                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                            }
+                        })
+                    ref.child("tasks").child(uid)
+                        .addChildEventListener(object : ChildEventListener {
+                            override fun onCancelled(p0: DatabaseError) {
+
+                            }
+
+                            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+                            }
+
+                            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                            }
+
+                            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                                val record = p0.getValue(Record::class.java)
+                                if (!user?.tasks?.contains(record)!!)
+                                    record?.let { user?.tasks?.add(it) }
+
+                                Log.d(TAG, record.toString())
+                            }
+
+                            override fun onChildRemoved(p0: DataSnapshot) {
+                                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                            }
+                        })
+                    ref.child("incomerecords").child(auth.uid.toString())
+                        .addChildEventListener(object : ChildEventListener {
+                            override fun onCancelled(p0: DatabaseError) {
+
+                            }
+
+                            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+                            }
+
+                            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                            }
+
+                            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                                val record = p0.getValue(Record::class.java)
+                                Log.d(TAG, record.toString())
+                                if (!user?.incomeRecords?.contains(record)!!)
+                                    record?.let { user?.incomeRecords?.add(it) }
+                                bundle.putSerializable("user", user)
+                            }
+
+                            override fun onChildRemoved(p0: DataSnapshot) {
+                                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                            }
+                        })
+                    ref.child("expenserecords").child(auth.uid.toString())
+                        .addChildEventListener(object : ChildEventListener {
+                            override fun onCancelled(p0: DatabaseError) {
+
+                            }
+
+                            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+                            }
+
+                            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                            }
+
+                            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                                val record = p0.getValue(Record::class.java)
+                                Log.d(TAG + "here", record.toString())
+                                if (!user?.expenseRecords?.contains(record)!!)
+                                    record?.let { user?.expenseRecords?.add(it) }
+                                bundle.putSerializable("user", user)
+                            }
+
+                            override fun onChildRemoved(p0: DataSnapshot) {
+                                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                            }
+                        })
                     bundle.putSerializable("user", user)
                     updata()
                 }
             })
-            ref.child("users").child(auth.uid.toString())
-                .addValueEventListener(object : ValueEventListener {
-                    override fun onCancelled(p0: DatabaseError) {
-                    }
-
-                    override fun onDataChange(p0: DataSnapshot) {
-                        user?.money = p0.child("money").getValue().toString()
-                        user?.incomes = p0.child("incomes").value as MutableMap<String, String>
-                        user?.expenses = p0.child("expenses").value as MutableMap<String, String>
-                        bundle.putSerializable("user", user)
-                    }
-                })
-
-//            ref.child("incomerecords").child(auth.uid.toString())
-//                .addChildEventListener(object : ChildEventListener {
-//                    override fun onCancelled(p0: DatabaseError) {
-//
-//                    }
-//
-//                    override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-//                    }
-//
-//                    override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-//                    }
-//
-//                    override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-//                        val record = p0.getValue(Record::class.java)
-//                        Log.d(TAG, record.toString())
-//                        if (!user?.incomeRecords?.last()?.id.equals(record?.id))
-//                            record?.let { user?.incomeRecords?.add(it) }
-//                        bundle.putSerializable("user", user)
-//                    }
-//
-//                    override fun onChildRemoved(p0: DataSnapshot) {
-//                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//                    }
-//                })
-//            ref.child("expenserecords").child(auth.uid.toString())
-//                .addChildEventListener(object : ChildEventListener {
-//                    override fun onCancelled(p0: DatabaseError) {
-//
-//                    }
-//
-//                    override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-//                    }
-//
-//                    override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-//                    }
-//
-//                    override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-//                        val record = p0.getValue(Record::class.java)
-//                        Log.d(TAG + "here", record.toString())
-//                        if (!user?.expenseRecords?.last()?.id.equals(record?.id))
-//                            record?.let { user?.expenseRecords?.add(it) }
-//                        bundle.putSerializable("user", user)
-//                    }
-//
-//                    override fun onChildRemoved(p0: DataSnapshot) {
-//                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//                    }
-//                })
-            ref.child("applys").child(uid)
-                .addValueEventListener(object :ValueEventListener{
-                    override fun onCancelled(p0: DatabaseError) {
-                        TODO("Not yet implemented")
-                    }
-
-                    override fun onDataChange(p0: DataSnapshot) {
-                        user?.applys?.clear()
-                        p0.children.forEach { it ->
-                            val record = it.getValue(Record::class.java)
-                            record?.let { it1 -> user?.applys?.add(it1) }
-                        }
-                        bundle.putSerializable("user", user)
-                    }
-                })
-            ref.child("tasks").child(uid)
-                .addValueEventListener(object :ValueEventListener{
-                    override fun onCancelled(p0: DatabaseError) {
-                        TODO("Not yet implemented")
-                    }
-
-                    override fun onDataChange(p0: DataSnapshot) {
-                        user?.tasks?.clear()
-                        p0.children.forEach { it ->
-                            val record = it.getValue(Record::class.java)
-                            record?.let { it1 -> user?.tasks?.add(it1) }
-                        }
-                        bundle.putSerializable("user", user)
-                    }
-                })
         } else {
             startActivityForResult(Intent(this, LoginActivity::class.java), REQUESTCODE)
         }

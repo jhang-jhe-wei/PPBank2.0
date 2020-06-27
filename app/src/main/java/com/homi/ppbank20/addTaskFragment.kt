@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_add_task.*
@@ -51,7 +52,8 @@ class addTaskFragment : Fragment() {
                     .setMessage(getString(R.string.finish)).setNegativeButton("好的", { dialogInterface: DialogInterface, i: Int ->
                         ed_add_task_name.text.clear()
                         ed_add_task_content.text.clear()
-                        ed_add_task_money.text.clear()}).create()
+                        ed_add_task_money.text.clear()
+                        findNavController().navigate(R.id.m_taskFragment)}).create()
                     .show()
                 val key = FirebaseDatabase.getInstance().reference.child("tasks").child(uid).push().key
                 val record = Record(
@@ -64,7 +66,10 @@ class addTaskFragment : Fragment() {
                             )
                         ).time
                     ),
-                    arguments?.getString("type").toString(),
+                    ed_add_task_name.text.toString(),
+                    ed_add_task_content.text.toString(),
+                    ed_add_task_money.text.toString(),
+                    arguments?.get("type").toString(),
                     "0"
                 )
                 FirebaseDatabase.getInstance().reference.child("tasks").child(uid).child(key.toString())

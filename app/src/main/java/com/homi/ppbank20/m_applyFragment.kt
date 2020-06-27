@@ -87,8 +87,7 @@ class m_applyFragment : Fragment() {
 
         fun setList(list: MutableList<Record>?) {
             if (list != null) {
-                data = list
-                data.reverse()
+                data = list                
             }
             Log.d(TAG,data.toString())
         }
